@@ -1,0 +1,60 @@
+<ion-view view-title="Workshops">
+
+  <ion-content>
+    <div ng-style="{'background-image':'url(img/carousel/workshops.jpg)'}" style="min-height: 130px;width:100%;background-size:cover; background-position: center center;"></div>
+  <!--<ion-slide-box>
+    <ion-slide>
+      <div>
+        <img ng-src="img/gif/loading_flying.gif" style="border-radius: 10px; width:100%; height:200px;"/>
+        </div>
+    </ion-slide>
+    <ion-slide>
+      <div>
+        <img ng-src="img/gif/loading_flying.gif" style="border-radius: 10px; width:100%; height:200px;"/>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div>
+        <img ng-src="img/gif/loading_flying.gif" style="border-radius: 10px; width:100%; height:200px;"/>
+      </div>
+    </ion-slide>
+  </ion-slide-box>-->
+  <div align="center" style="color:#333;padding-top: 8px;padding-bottom: 8px;min-height: 30px;background-color: #f5f5f5;color: #222;font-weight: 500;    position: relative;z-index: 2;display: block;margin: -1px;font-size: 16px;overflow: hidden;text-overflow: ellipsis;
+    white-space: nowrap;">
+    Featured Categories
+  </div>
+  </div> 
+  <div ng-repeat="subject in workshops">
+    <div ng-style="{'background-image':'url({{workshops[$index].pic}})'}" style="width:100%; height: 140px;background-size:cover;" ui-sref="tab.workshops-search({keyWord: modifiedArray[$index]})">
+      <div style="text-align: center; text-decoration: none; color: white; font-weight:bold;width:100%;height:130px;font-size:30px;padding-top:50px;">{{workshops[$index].key}}</div>
+    </div>
+  </div>
+  <div align="center" style="color:#333;padding-top: 8px;padding-bottom: 8px;min-height: 30px;color: #222;font-weight: 500;    position: relative;z-index: 2;display: block;margin: -1px;font-size: 16px;overflow: hidden;text-overflow: ellipsis;
+    white-space: nowrap;">
+    Featured Workshops
+  </div>
+  <div ng-if="featuredResults" style="height:13px;background-color:#f2f2f2"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px" ng-repeat="workshop in featuredResults" ui-sref="tab.workshops-individual({workshopId:workshop.workshopID, keyWord:workshop.keyToPass})">
+                        <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                    <div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+                  <p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+                        <p style="line-height:14px;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+  </ion-content>
+
+
+</ion-view>

@@ -1,0 +1,23 @@
+<div class="modal">
+	<header class="bar bar-header bar-calm">
+	  <h1 class="title">Testimonial</h1>
+	  <div class="button button-clear" ng-click="closeModal(1)"><span class="icon ion-close"></span></div>
+	</header>
+	<ion-content has-header="true" padding="true" style="padding-top: 15%;">
+	<ion-list>
+		<div class="list list-inset">
+			<span class="input-label">Experience</span>
+			<label class="item item-text-wrap item-input">
+				<textarea name="brief" placeholder="How did it go?" ng-model="testimonial.comment" autofocus required>
+				</textarea>
+			</label>
+			<span class="input-label">Rating Score</span>
+			<ionic-ratings ratingsobj='ratingsObject'></ionic-ratings>
+			<br><br>
+		    <button class="tabs button button-block button-positive" ng-click="setReview(); closeModal(1)">
+		      Done
+		    </button>
+		</div>
+	</ion-list>
+	</ion-content>
+</div>

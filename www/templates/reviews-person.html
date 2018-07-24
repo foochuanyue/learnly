@@ -1,0 +1,35 @@
+<ion-view view-title="Reviews">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+  <ion-content style="background-color: #EEE">
+    <ion-list>
+      <ion-item class="item" ng-hide="reviews" type="item-text-wrap">
+        <h2>No Reviews Yet</h2>
+      </ion-item>
+      <ion-item class="item item-avatar item-button-right" ng-show="reviews" ng-repeat="review in reviews" type="item-text-wrap">
+        <img ng-src="{{review.reviewer_face}}" err-src="img/assets/nologin.png">
+        <h2>{{review.reviewer_name}}</h2>
+
+
+
+        <h5 ng-if="review.orderType" style="color: green;">{{getOrderTypeName(review.orderType)}}</h5>
+        <p>{{review.comment}}</p>
+        
+        <button class="button button-clear">
+          
+        <div style="color: grey; background:#FFF; border-radius: 5px; text-align: center;">
+          <h4>{{review.time | date:'longDate'}}</h4>
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="j in makeArrayOfSize(review.rating)">
+        </div>
+        </button>     
+
+      </ion-item>
+
+    </ion-list>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: left;">
+          <p>Students can leave <b>ratings and reviews </b>for tutors</p><p>Ratings are <b>averaged</b> across all reviews received</p><p>The maximum rating is <b>5</b> carrots</p><img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(5)">
+        </div>
+    </div>
+  </ion-content>
+</ion-view>

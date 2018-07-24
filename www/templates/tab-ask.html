@@ -1,0 +1,304 @@
+f<ion-view view-title="Timeline">
+<!--
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-clear no-animation" ng-click="openModal(1)" ng-if="authData.provider">
+      <i class="ion-ios-compose" style="color: white"> New</i>
+    </button>
+  </ion-nav-buttons>
+-->
+  <ion-content class="has-header" scroll="false">
+    <div class="button-bar">
+      <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+        Request Tutor
+      </div>
+      <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+        Tutor Promotion
+      </div>
+    </div>
+    <div class="button-bar" style="height:2px;">
+          <div class="col center" ng-class="{workshopActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+            </div>
+            <div class="col center"></div>
+            <div class="col center" ng-class="{workshopActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+            </div>
+            </div>
+
+    <ion-slide-box id="subjectboxcontainer" does-continue="false" show-pager="false" on-slide-changed="categorySlideChanged($index)">
+    <ion-slide>
+          <div class="item item-divider row" ng-if="requestloading">
+                  <button class="button button-full button-balanced">
+                    <i class="ion-paper-airplane"></i>
+                    Loading...
+                  </button>
+          </div>
+          <div class="item item-divider row" ng-if="requests[19].requester.id!=authData.uid&&!requestloading">
+                  <button class="button button-full button-balanced" ui-sref="tab.ask-request()">
+                    <i class="ion-paper-airplane"></i>
+                    Request A Tutor For Free
+                  </button>
+
+          </div>
+          <div class="item item-divider row" ng-if="requests[19].requester.id==authData.uid&&!requestloading">
+                  <button class="button button-full button-balanced" ng-click="showAlert('Recent Post Limit','Give others a chance, try again tomorrow')">
+                    You Have Recently Posted
+                  </button>
+          </div>
+        <ion-content style="background-color: #EEE" class="has-header">
+       <!--
+         <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+              <div class="col" style="text-align: center;">
+                  <p>Ask <b>tutors</b> for tuition or homework help</p>
+                  <p><b>No commision or fees</b></p>
+              </div>
+          </div>
+ -->
+
+          <div class="row" ng-if="requestloading">
+            <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+
+                <p>Our crack team is getting results... Patience!</p>
+                <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px"/>
+
+            </div>
+          </div>
+          <div class="row" ng-show="person.badSearchResult">
+            <div class="col col-22" style="color: grey; background:#FFF; border-radius: 5px; text-align: center;">
+              <br><br>
+                <p>Dang! We didn't find any results...</p>
+
+                  <button class="button button-full button-positive" ng-click="removeTag()" ng-hide="!currentfilter">
+                    Reset
+                  </button>
+
+            </div>
+          </div>
+            <div class="list card" ng-repeat="job in requests | orderBy:'-time'" ng-if="requests" style="margin-top:50px;">
+
+              <div class="item item-avatar" ui-sref="tab.ask-person({alias: job.requester.id})">
+                <img ng-src="{{job.requester.face}}" err-src="img/assets/nologin.png">
+                <a class="positive askprice"><b>{{defaultCountry.currency}}{{job.price|currency:"":0}}<span ng-if="job.meta.tuitionType">/hr</span></b></a>
+                <h2>{{job.requester.name}}</h2>
+                <p>{{job.time | date:"dd-MMM-yyyy ' at' h:mma"}}</p>
+            </div>
+
+            <div ng-if="job.isReported" style="background-color:#ef473a;height:50px;padding-top:5px;">
+              <a style="color:white;font-size:15px">
+              This User has Been Reported!
+              <br>
+              Learnly's Team will be Investigating the Issue.
+              </a>
+            </div>
+
+            <div class="item item-body">
+              <a class="assertive" ng-if="job.meta">
+                {{job.meta.role}} requesting <b>{{job.categories}}</b>
+                <i class="icon ion-android-person" ng-if="job.meta.tuitionType=='Private'"></i>
+                <i class="icon ion-ios-people" ng-if="job.meta.tuitionType=='Group'"></i>
+                <b><span ng-if="job.meta.tuitionType">{{job.meta.tuitionType}}</span> {{job.meta.requestNature}}</b>
+                <br>
+                <span ng-if="job.duration&&job.frequency&&job.frequencyType">Lesson Details: <b>{{job.duration}} hrs/lesson <i class="ion-ios-alarm"></i><span ng-if="job.frequency!=1"> {{job.frequency}} lessons </span> {{job.frequencyType}}</b></span>
+                <!--
+                <span ng-if="job.meta.tuitionGender&&(job.meta.tuitionGender!='None')">{{job.meta.tuitionGender}} Preferred</span>
+              -->
+              </a>
+              <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic" ng-click="showImage(job.task.pic)"/>
+              <p ng-if="job.meta">
+              {{job.task.writeup}}
+              </p>
+              <span ng-if="!job.meta">
+              {{job.task.writeup}}
+              </span>
+              <p>
+
+                <a class="assertive" ng-if="job.meta.tuitionGender&&(job.meta.tuitionGender!='None')">Prefers <i class="icon ion-woman" ng-if="job.meta.tuitionGender=='Female'"></i><i class="icon ion-man" ng-if="job.meta.tuitionGender=='Male'"></i> {{job.meta.tuitionGender}}</a><br>
+                <a class="royal" ng-if="job.location"><b> <i class="icon ion-ios-location"></i> {{job.location}}</b> </a>
+              </p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-hide="job.foundTutor&&job.likesCount<=0">
+              <p class="bar-calm" ng-hide="job.foundTutor">
+                <a ng-if="job.likesCount>0"><b>{{job.likesCount}} Tutor<span ng-if="(job.likesCount>1)">s</span> Answered</b></a>
+                <a ng-if="job.likesCount==0"><b>Open To Tutors</b></a>
+              </p>
+              <p class="bar-calm" ng-show="job.foundTutor">
+                <a ng-if="job.likesCount>0"><b>Found Tutor After {{job.likesCount}} Responses</b></a>
+              </p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-if="authData.provider">
+                <a class="tab-item" ng-if="job.requester.id==authData.uid&&!job.foundTutor" ui-sref="tab.ask-request({requestId: job.key})">
+                  <i class="icon ion-edit"></i> Edit
+                </a>
+                <a class="tab-item" ng-click="chooseTutorToClose(job)" ng-if="!job.foundTutor&&job.requester.id==authData.uid">
+                  <i class="icon ion-checkmark-circled"></i> I Found My Tutor
+                </a>
+                <a class="tab-item" ng-click="disclaimerAlert('I understand that requests are independent agreements between me and the requester. Learnly provides this service in good faith and provides no warranties whatsoever.',job);" ng-if="((user.verify.complete)&&(!job.liked))&&((job.requester.id!=authData.uid)&&(!job.foundTutor))">
+                  <i class="icon ion-chatbox"></i> Answer
+                </a>
+                <a class="tab-item" ng-click="needToBeVerifiedTutor(1)" ng-if="(!user.verify.complete)&&(!job.liked)&&((job.requester.id!=authData.uid)&&(!job.foundTutor))">
+                  <i class="icon ion-chatbox"></i> Answer
+                </a>
+                <a class="tab-item" ng-if="job.liked&&((job.requester.id!=authData.uid)&&(!job.foundTutor))" href="#/tab/chats">
+                  <i class="icon ion-ios-chatboxes"></i> See Inbox
+                </a>
+              <a class="tab-item" ng-if="job.foundTutor">
+                <i class="icon ion-checkmark-circled"></i> Closed
+              </a>
+              <a class="tab-item" ng-click="reportAlert(job.key, job.requester.id)" ng-if="job.requester.id!=authData.uid">
+                <i class="icon ion-alert-circled"></i> Report
+              </a>
+            </div>
+
+          </div>
+        </ion-content>
+      </ion-slide>
+      <ion-slide>
+          <div class="item item-divider row" ng-if="jobloading">
+                  <button class="button button-full button-positive">
+                    <i class="ion-paper-airplane"></i>
+                    Loading...
+                  </button>
+          </div>
+          <div class="item item-divider row" ng-if="(!user.verify.complete)&&!jobloading">
+                  <button class="button button-full button-positive" ng-click="needToBeVerifiedTutor(2)">
+                    <i class="ion-paper-airplane"></i>
+                    Promote My Tuition
+                  </button>
+          </div>
+          <div class="item item-divider row" ng-if="((user.verify.complete)&&(jobs[19].requester.id!=authData.uid)&&(jobs[18].requester.id!=authData.uid))&&!jobloading">
+                  <button class="button button-full button-positive" ui-sref="tab.ask-promotion()">
+                    <i class="ion-paper-airplane"></i>
+                    Promote My Tuition
+                  </button>
+          </div>
+          <div class="item item-divider row" ng-if="((jobs[19].requester.id==authData.uid)||(jobs[18].requester.id==authData.uid))&&!jobloading">
+                  <button class="button button-full button-positive" ng-click="showAlert('Recent Post Limit','Give others a chance, try again tomorrow')">
+                    You Have Recently Posted
+                  </button>
+          </div>
+        <ion-content style="background-color: #EEE" class="has-header">
+
+
+<!--
+          <div class="item item-divider row">
+            <div class="col col-33">
+            <p align = "left">
+            <label class ="button button-small button-light" ng-model="currentfilter" ng-if="currentfilter">
+              {{currentfilter}}
+            </label>
+            <label class ="button button-small default" ng-model="currentfilter" ng-if="!currentfilter">
+              All Categories
+            </label>
+            </p>
+            </div>
+            <div class="col col-33">
+            <button class="button button-small button-positive" ng-click="openModal(3)">
+              Choose Category
+            </button>
+            </div>
+            <div class="col col-33">
+            <p align = "right">
+            <button class="button button-small button-positive" ng-click="removeTag(); badSearchResult=false;" ng-hide="!currentfilter">
+              Reset
+            </button>
+            </p>
+            </div>
+          </div>
+        -->
+
+    <div class="row" ng-if="jobloading">
+      <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+
+          <p>Our crack team is getting results... Patience!</p>
+          <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px"/>
+
+      </div>
+    </div>
+
+    <div class="row" ng-show="person.badSearchResult">
+
+      <div class="col col-22" style="color: grey; background:#FFF; border-radius: 5px; text-align: center;">
+        <br><br>
+          <p>Dang! We didn't find any results...</p>
+
+            <button class="button button-full button-positive" ng-click="removeTag()" ng-hide="!currentfilter">
+              Reset
+            </button>
+
+      </div>
+    </div>
+
+          <div class="list card" ng-repeat="job in jobs| orderBy:'-time'" ng-if="jobs">
+
+            <div class="item item-avatar" ui-sref="tab.ask-person({alias: job.requester.id, simple: true})">
+              <img ng-src="{{job.requester.face}}" err-src="img/assets/placeholder.png">
+              <a class="positive askprice"><b> {{defaultCountry.currency}}{{job.price|currency:"":0}}<span ng-if="job.meta.tuitionType">/hr</span> </b></a>
+              <h2 align = "left">{{job.requester.name}}</h2>
+              <!--
+              <p align = "left"><span am-time-ago="job.time"></span></p>
+              -->
+              <p align = "left">{{job.time | date:"dd-MMM' at' h:mma"}}</p>
+            </div>
+
+            <div class="item item-body">
+              <a class="assertive" ng-if="job.meta">
+                {{job.meta.role}} offering <b>{{job.categories}}</b>
+                <i class="icon ion-android-person" ng-if="job.meta.tuitionType=='Private'"></i>
+                <i class="icon ion-ios-people" ng-if="job.meta.tuitionType=='Group'"></i>
+                <b><span ng-if="job.meta.tuitionType">{{job.meta.tuitionType}}</span> {{job.meta.requestNature}}</b>
+              </a>
+              <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic" ng-click="showImage(job.task.pic)"/>
+              <p ng-if="job.meta">
+              {{job.task.writeup}}
+              </p>
+              <span ng-if="!job.meta">
+              {{job.task.writeup}}
+              </span>
+              <p>
+                <a class="subdued">{{job.personLikes}} follower<span ng-if="(job.personLikes>1)">s</a>
+                <a class="royal" ng-if="job.location"><i class="icon ion-ios-location"></i> <b>{{job.location}}</b></a>
+              </p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-if="authData.provider">
+              <a class="tab-item" ng-click="removeTutor(job.requester.id, job.likesCount, jobs.indexOf(job))" ng-show="user.likes.person[job.requester.id]">
+                <i class="icon assertive ion-heart"></i> Following
+              </a>
+              <a class="tab-item" ng-click="saveTutor(job.requester.id, job.likesCount, jobs.indexOf(job))" ng-show="!user.likes.person[job.requester.id]">
+                <i class="icon ion-heart"></i> Follow
+              </a>
+
+              <!--
+              <a class="tab-item" ng-click="removeTutor(job.requester.id, job.likesCount, jobs.indexOf(job))" ng-show="job.liked">
+                <i class="icon ion-star energized"></i> Saved
+              </a>
+              <a class="tab-item" ng-click="saveTutor(job.requester.id, job.likesCount, jobs.indexOf(job))" ng-show="!job.liked">
+                <i class="icon ion-star"></i> Save
+              </a>
+            -->
+              <a class="tab-item" ng-if="job.requester.id==authData.uid" ui-sref="tab.ask-promotion({promotionId: job.key})">
+                  <i class="icon ion-edit"></i> Edit
+                </a>
+              <a class="tab-item" ng-click="deleteJob(job.key, authData.uid)" ng-if="job.requester.id==authData.uid">
+                <i class="icon ion-close-circled"></i> Delete
+              </a>
+              <a class="tab-item" ng-if="job.requester.id!=authData.uid" ui-sref="tab.ask-person({alias: job.requester.id, simple: true})">
+                <i class="icon ion-ios-search-strong"></i> View
+              </a>
+              <!--
+              <a class="tab-item" ng-click="disclaimerAlert('I understand that requests are independent agreements between me and the requester. Learnly provides this service in good faith and provides no warranties whatsoever.',job.key, job.task.writeup, job.price, job.requester);" ng-if="job.requester.id!=authData.uid">
+                <i class="icon ion-chatbox"></i> Chat
+              </a>
+            -->
+              <a class="tab-item" ng-click="reportAlert(job.key, job.requester.id)">
+                <i class="icon ion-alert-circled"></i> Report
+              </a>
+            </div>
+
+          </div>
+        </ion-content>
+
+      </ion-slide>
+
+    </ion-slide-box>
+  </ion-content>
+</ion-view>

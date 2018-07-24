@@ -1,0 +1,247 @@
+<ion-view view-title="Search" hide-nav-bar="false">
+
+  <ion-nav-title>
+    <div class="item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search Subject or User" ng-model="search.keyWord" autofocus required>
+      </label>
+      <button ng-show="search.keyWord" class="input-button button button-icon ion-android-close" ng-click="search.keyWord ='';">
+      </button>
+      <button class="button button-clear item-button-right" ng-click="search.keyWord= '' ; $ionicGoBack()">
+        Back
+      </button>
+
+    </div>
+  </ion-nav-title>
+
+  <ion-content class="has-header" overflow-scroll="true">
+
+
+    <ion-list ng-show="!search.keyWord">
+      <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+          <div class="col col-15">
+            <button class="button icon-left ion-star button-positive">Search Tip</button>
+          </div>
+          <div class="col" style="text-align: left;">
+              <p>You can find tutors by their @username</p>
+          </div>
+      </div>
+      <div class="item item-divider">
+      Popular Searches
+      </div>
+      <ion-item class="row" ng-click="search.keyWord ='Economics'">
+          <div class="col col-18">Economics</div>
+          <div class="col col-42" style="text-align: right;">
+            <button class="button button-small item-button-right">
+              A Level
+            </button>
+            <button class="button button-small item-button-right">
+              University
+            </button>
+          </div>
+      </ion-item>
+      <ion-item class="row" ng-click="search.keyWord ='English'">
+          <div class="col col-18">English</div>
+          <div class="col col-42" style="text-align: right;">
+            <button class="button button-small item-button-right">
+              PSLE
+            </button>
+            <button class="button button-small item-button-right">
+              O Level
+            </button>
+            <button class="button button-small item-button-right">
+              A Level
+            </button>
+          </div>
+      </ion-item>
+      <ion-item class="row" ng-click="search.keyWord ='Maths'">
+          <div class="col col-18">Maths</div>
+          <div class="col col-42" style="text-align: right;">
+            <button class="button button-small item-button-right">
+              PSLE
+            </button>
+            <button class="button button-small item-button-right">
+              O Level
+            </button>
+            <button class="button button-small item-button-right">
+              A Level
+            </button>
+          </div>
+      </ion-item>
+
+      <div class="item item-divider">
+      All Subjects
+      </div>
+
+        <div ng-repeat="category in categories">
+          <ion-item class="item-dark"
+                    ng-click="toggleGroup(category)"
+                    ng-class="{active: isGroupShown(category)}">
+              <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{category.name}}
+          </ion-item>
+
+            <label class="item item-radio" ng-repeat="subject in category.subjects" ng-show="isGroupShown(category)">
+           <ion-radio class="item-accordion" ng-model="newSkill.name" ng-value="subject" ng-click="search.keyWord = subject">
+
+
+              <div class="item item-avatar">
+            <img ng-src="{{getSkillPic(subject)}}" err-src="img/assets/placeholder.png"/>
+            <h2>{{subject}}</h2>
+         </div>
+         <!--
+        <label class="item item-input item-select item-balanced" ng-show="newSkill.name===subject">
+              <div class="input-label">
+                  Class Level
+              </div>
+              <select>
+                  <option selected>{{newSkill.level}}</option>
+              </select>
+        </label>
+-->
+          </ion-radio>
+          </label>
+        </div>
+
+    </ion-list>
+
+    <ion-list ng-show="search.keyWord">
+      <div class="item item-divider" ng-show="results.length==0">
+        Results for '{{search.keyWord}}'
+      </div>
+
+      <div class="item item-divider" ng-show="results.length>0">
+        Listing {{results.length}} for '{{search.keyWord}} <span ng-if="search.currentLevel"> at {{search.currentLevel}}</span>'
+      </div>
+
+      <div class="row">
+        <button class="button button-small filterbutton" ng-model="button1" ng-class="(activeFilter=='+distance')?'button-positive':'button-stable button-outline'" ng-click="distancefilter(); button1.clicked=!button1.clicked;">
+          Nearest
+        </button>
+        <button class="button button-small filterbutton" ng-model="button2" ng-class="(activeFilter=='+rate')?'button-positive':'button-stable button-outline'" ng-click="ratefilter(); button2.clicked=!button2.clicked;">
+          Lowest $
+        </button>
+       <!-- <button class="button button-small" ng-model="button3" ng-class="(activeFilter=='-ratings')?'button-positive':'button-stable'" ng-click="ratingfilter(); button3.clicked=!button3.clicked;">
+          Ratings
+        </button> -->
+        <!--<button class="button button-small filterbutton" ng-model="button4" ng-class="(activeFilter=='+verified')?'button-positive':'button-stable button-outline'" ng-click="verifiedfilter(); button4.clicked=!button4.clicked;">
+          Verified
+        </button>
+        <button class="button button-small filterbutton" ng-model="button5" ng-class="(activeFilter=='+matching')?'button-positive':'button-energized'" ng-click="matchingfilter(); button5.clicked=!button5.clicked;">
+          Match Me
+        </button> -->
+      </div>
+
+      <ion-item ng-repeat="result in results | orderBy:activeFilter" ui-sref="person({alias: result.key, distance: result.distance})">
+      <div class="row">
+      <div>
+        <img ng-if="result.face&&(result.face!='img/assets/placeholder.png')" ng-src="{{result.face}}" height="90" width="90" style="border-radius: 10px" err-src="img/assets/nologin.png"/>
+        <img ng-if="result.face=='img/assets/placeholder.png'" ng-src="img/assets/nologin.png" height="90" width="90" style="border-radius: 10px"/>
+        <img ng-if="!result.face" ng-src="img/assets/nologin.png" height="90" width="90" style="border-radius: 10px"/>
+        </div>
+          <div class="col col-40">
+              <b class="item-text-wrap">{{result.name}}</b>
+              <p ng-if="result.location.name">{{result.location.name}}</p>
+              <p ng-if="result.distance>=0">{{result.distance | distance }}</p>
+          </div>
+          <div class="col col-35 ratingsquare" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+            <b ng-if="result.averaged">Avg </b><p ng-if="result.rate">{{defaultCountry.currency}}{{result.rate|currency:"":0}}/hr</p>
+              <p><img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(result.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-result.rating)"></p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div ng-if="result.verified" class="verifiedbutton">
+            <label verifiedbutton>
+                <i class="icon ion-checkmark-circled"></i>
+                <b>Verified</b>
+            </label>
+          </div>
+
+          <div class="col col-40" ng-if="result.levels&&result.verified"><h4>Levels Taught</h4>
+              <div class="item-text-wrap" ng-show="{{result.levels}}" ng-repeat="(key,value) in result.levels" >
+                   <p >{{key}}</p>
+              </div>
+          </div>
+
+
+          <div class="col col-40 levelstaught" ng-if="result.levels&&!result.verified"><h4>Levels Taught</h4>
+              <div class="item-text-wrap" ng-show="{{result.levels}}" ng-repeat="(key,value) in result.levels" >
+                   <p >{{key}}</p>
+              </div>
+          </div>
+
+          <div class="col col-35 freetrialbutton" ng-if="result.trial" style="background:#11c1f3;; color:white; border-radius:5px;text-align:center;">
+            <b>Free Trial</b>
+
+          </div>
+
+        </div>
+
+      </ion-item>
+
+    </ion-list>
+
+    <ion-infinite-scroll
+            immediate-check="false"
+            on-infinite="getMoreResults()"
+            ng-if="canWeLoadMoreContent()"
+            distance="10%">
+    </ion-infinite-scroll>
+
+        <div class="item item-divider" style="text-align: center;" ng-show="(results.length>0)&&(!badSearchResult)">
+        Looking For Something Else?
+        </div>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-show="(results.length>0)&&(!badSearchResult)">
+            <div class="col" style="text-align: center;">
+              <p>Don't like searching? Let tutors contact you instead</p>
+              <p><a class="item assertive" href="#/tab/ask">
+                <i class="ion-paper-airplane"></i> Post Tutor Request
+              </a></p>
+              <p>Looking for students?</p>
+              <p><a class="item royal" href="#/tab/account">
+                <i class="ion-location"></i> List Your Lesson
+              </a></p>
+            </div>
+        </div>
+
+        <div class="row" ng-show="results.length==0&&!badSearchResult&&(originalKeyword||search.keyWord)">
+          <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+
+              <p>Our crack team is searching now... Patience!</p>
+              <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px"/>
+
+          </div>
+        </div>
+        <div class="row" ng-show="badSearchResult">
+          <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+              <p>Dang! We didn't find this subject or person</p>
+              <p>OR</p>
+              <p>Try searching one of the following?</p>
+              <ion-list>
+                <div class="item item-divider">
+                Popular Searches
+                </div>
+                <ion-item ng-click="search.keyWord ='Maths'">
+                  Maths
+                </ion-item>
+                <ion-item ng-click="search.keyWord ='Economics'">
+                  Economics
+                </ion-item>
+                <ion-item ng-click="search.keyWord ='Korean'">
+                  Korean
+                </ion-item>
+                <ion-item ng-click="search.keyWord ='Piano'">
+                  Piano
+                </ion-item>
+                <ion-item ng-click="search.keyWord ='Guitar'">
+                  Guitar
+                </ion-item>
+              </ion-list>
+          </div>
+      </div>
+
+  </ion-content>
+</ion-view>

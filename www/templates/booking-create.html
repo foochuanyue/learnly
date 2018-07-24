@@ -1,0 +1,148 @@
+<ion-view view-title="Create Lesson">
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+  <ion-content class="has-header">
+    <ion-list>
+        <ion-item class="item" type="item-text-wrap" ng-show="orderType=='private'">
+        <div class="list card">
+
+          <div class="item item-avatar">
+            <img ng-if="person.face&&(person.face!='img/assets/placeholder.png')" ng-src="{{person.face}}">
+            <img ng-if="person.face&&(person.face=='img/assets/placeholder.png')" ng-src="{{person.face}}">
+            <img ng-if="!person.face" ng-src="img/assets/nologin.png">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+          </div>
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic">
+            Requesting for {{order.orderDetails.level}} {{order.orderDetails.lessonName}}
+            <p></p>
+          
+            <p>
+              <button class = "button button-calm" ng-click="openDatePicker()" ng-model=pickeddate ng-show="(authData.uid===order.requesterid)&&!order.confirmed&&pickeddate">
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-calm" ng-model=pickeddate ng-show="(order.accepted&&(authData.uid!=order.requesterid))||order.confirmed">
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-calm" ng-click="openDatePicker()" ng-show="(authData.uid===order.requesterid)&&!order.confirmed&&!pickeddate">
+              Click here to pick a Date.
+              </button>
+              <p></p>
+              <button class = "button button-balanced" ng-click="openTimePicker()" ng-model=pickedtime ng-show="(authData.uid===order.requesterid)&&!order.confirmed&&pickedtime">
+              {{pickedtime | date:'shortTime'}}
+              </button>
+              <button class = "button button-balanced" ng-model=pickedtime ng-show="(order.accepted&&(authData.uid!=order.requesterid)&&!offer.confirmed)||order.confirmed">
+              {{pickedtime | date:'shortTime'}}
+              </button>
+              <button class = "button button-balanced" ng-click="openTimePicker()" ng-model=pickedtime ng-show="(authData.uid===order.requesterid)&&!order.confirmed&&!pickedtime">
+              Click here to pick a Time.
+              </button>
+            </p>
+
+            <p>
+              <div class="range-slider2">
+                <h2 class="graybackground"><b>Price ($/hr)</b></h2>
+                <input type="text" class="js-range-slider2" />
+              </div>
+            </p>
+
+            <p>
+            <div class="range-slider">
+              <h2 class="graybackground"><b>Duration (hrs)</b></h2>
+              <input type="text" class="js-range-slider" />
+            </div>
+              </p>
+
+              <div style="height:50px;width:30%;text-align:center;display:inline-block;padding-top:3px;border:2px solid;border-color:#ff5151;" ng-class="{buttonActive: paymentMethod == 'Cash'}" ng-click="paymentMethod = 'Cash'">
+              <b>Cash Payment</b>
+              </div>
+              <div ng-show="paymentEnabled" style="height:50px;width:30%;text-align:center;display:inline-block;padding-top:3px;border:2px solid;border-color:#ff5151;" ng-class="{buttonActive: paymentMethod == 'Online'}" ng-click="paymentMethod = 'Online'">
+              <b>Online Payment</b>
+              </div>
+
+              </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" ng-click="createOrder(order.providerid)">
+              <i class="icon ion-thumbsup"></i> Offer
+            </a>          
+          </div>
+
+        </div>
+
+      </ion-item> 
+
+      <ion-item class="item" type="item-text-wrap" ng-show="orderType=='gigs'">
+         <div class="list card">
+
+          <div class="item item-avatar">
+            <img ng-if="person.face&&(person.face!='img/assets/placeholder.png')" ng-src="{{person.face}}">
+            <img ng-if="person.face&&(person.face=='img/assets/placeholder.png')" ng-src="{{person.face}}">
+            <img ng-if="!person.face" ng-src="img/assets/nologin.png">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+          </div>
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic">
+            {{order.orderDetails.gigDesc}}
+            <p></p>
+          
+            <p>
+              <button class = "button button-calm" ng-click="openDatePicker()" ng-model=pickeddate ng-show="(authData.uid===order.providerid)&&!order.confirmed&&pickeddate">
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-calm" ng-model=pickeddate ng-show="(order.accepted&&(authData.uid!=order.providerid))||order.confirmed">
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-calm" ng-click="openDatePicker()" ng-show="(authData.uid===order.providerid)&&!order.confirmed&&!pickeddate">
+              Click here to pick a Date.
+              </button>
+              <p></p>
+              <button class = "button button-balanced" ng-click="openTimePicker()" ng-model=pickedtime ng-show="(authData.uid===order.providerid)&&!order.confirmed&&pickedtime">
+              {{pickedtime | date:'shortTime'}}
+              </button>
+              <button class = "button button-balanced" ng-model=pickedtime ng-show="(order.accepted&&(authData.uid!=order.providerid)&&!offer.confirmed)||order.confirmed">
+              {{pickedtime | date:'shortTime'}}
+              </button>
+              <button class = "button button-balanced" ng-click="openTimePicker()" ng-model=pickedtime ng-show="(authData.uid===order.providerid)&&!order.confirmed&&!pickedtime">
+              Click here to pick a Time.
+              </button>
+            </p>
+
+            <p>
+              <div class="range-slider2">
+                <h2 class="graybackground"><b>Price ($/hr)</b></h2>
+                <input type="text" class="js-range-slider2" />
+              </div>
+            </p>
+
+            <p>
+            <div class="range-slider">
+              <h2 class="graybackground"><b>Duration (hrs)</b></h2>
+              <input type="text" class="js-range-slider" />
+            </div>
+              </p>
+
+              <div style="height:50px;width:30%;text-align:center;display:inline-block;padding-top:3px;border:2px solid;border-color:#ff5151;" ng-class="{buttonActive: paymentMethod == 'Cash'}" ng-click="paymentMethod = 'Cash'">
+              <b>Cash Payment</b>
+              </div>
+              <div ng-show="paymentEnabled" style="height:50px;width:30%;text-align:center;display:inline-block;padding-top:3px;border:2px solid;border-color:#ff5151;" ng-class="{buttonActive: paymentMethod == 'Online'}" ng-click="paymentMethod = 'Online'">
+              <b>Online Payment</b>
+              </div>
+
+              </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" ng-click="createOrder(order.requesterid)">
+              <i class="icon ion-thumbsup"></i> Offer
+            </a>          
+          </div>
+
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

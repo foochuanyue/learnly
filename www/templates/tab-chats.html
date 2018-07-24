@@ -1,0 +1,62 @@
+<ion-view view-title="Chats" cache-view="true">
+  <!-- Setting cache view to false causes back function to fail in iOS-->
+
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-clear no-animation" ng-click="contactUs()">
+      <i class="ion-person-stalker" style="color: white"> Helpdesk</i>
+    </button>
+
+  </ion-nav-buttons>
+
+
+  <ion-content class="has-header" ng-show="authData.provider!='anonymous'" overflow-scroll = "false" style="background-color: #EEE">
+
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-button-right item-icon-right" ng-repeat="chat in chats | orderBy:'-lastText.time'" type="item-text-wrap" ui-sref="tab.chat-detail({chatId: chat.key, id: chat.receiver.uid, name: chat.receiver.name, face: chat.receiver.face, active: chat.active})">
+        <img ng-src="{{chat.receiver.face}}" err-src="img/assets/placeholder.png"/>
+        <h2>{{chat.receiver.name}}</h2>
+        <h5 ng-if="chat.orderType" style="color: green;">{{getOrderTypeName(chat.orderType)}}</h5>
+        <button class="button button-clear">
+          <!--
+          <h4>{{chat.lastText.time | date:'shortTime'}}</h4>
+        -->
+          <h4 am-time-ago="chat.lastText.time"></h4>
+          
+        </button>
+        <p>{{chat.lastText.text}}</p>
+
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+      <div class="row" ng-show="!chats">
+        <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+            <p>No messages available</p>
+        </div>
+      </div>
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: left;">
+          <p>Manage your tutor/student here with the<b> Inbox scheduler</b></p><p>To stop receiving student requests, <b>visit Me>Settings</b> to hide your profile from listings</p>
+        </div>
+    </div>
+  </ion-content>
+  <ion-content class="has-header" ng-hide="authData.provider!='anonymous'">
+    <ion-slide-box style="padding-top: 140px;" show-pager="false">
+      <ion-slide>
+        <img ng-src="img/assets/emptyspeech.png" height="140px" >
+        <h3>Yo! What's up?</h3>
+        <button class="button button-balanced" style="width: 288px" ng-click="reLogin()">
+          Sign In Now
+        </button>
+        <h5>To See Your Learnly Messages</h5>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>

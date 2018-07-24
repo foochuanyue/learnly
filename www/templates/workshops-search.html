@@ -1,0 +1,147 @@
+<ion-view view-title="{{search.keyWord}}">
+	<ion-nav-back-button>
+	</ion-nav-back-button>
+    <ion-content class="has-header" scroll="false">
+        <div class="row" style="background-color:#f2f2f2">
+            <img ng-src="img/carrotPoint.png" style="border-radius: 10px; width:40px;height:50px;margin-left:15px"/>
+            <div style="margin-left:5px;width:80%">
+             <b>Search Location:</b>
+             <br>
+             <div ng-show="!location.name">
+            Searching for Address...
+            </div>
+             <div ng-show="location.name" style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden";>
+            {{location.name}}
+            </div>
+            </div>
+            <div style="font-size:13px;color:blue;margin-right:10px;margin-top:5px;width:60px;text-align:right;" ng-show="location.name" ng-click="openModal(0);">
+              <b>Change</b>
+            </div>
+        </div>
+          <div class="button-bar">
+            <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+              Nearest to you
+            </div>
+             <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+              Most Popular
+            </div>
+          </div>  
+          <div class="button-bar" style="height:2px;">
+          <div class="col center" ng-class="{workshopActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+            </div>
+            <div class="col center"></div>
+            <div class="col center" ng-class="{workshopActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+            </div>
+            </div>
+          <ion-slide-box id="subjectboxcontainer" does-continue="false" on-slide-changed="categorySlideChanged($index)">
+            <ion-slide style="text-align:left">
+            	<ion-content class="has-footer">
+            	<div ng-if="results" style="height:13px;background-color:#f2f2f2"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px" ng-repeat="workshop in results| orderBy:'+distance'" ui-sref="tab.workshops-individual({workshopId:workshop.key, keyWord:search.keyWordtoPass})">
+                        <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                   	<div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+            			<p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+                        <p style="line-height:14px;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="row" ng-show="!finishedgeofireload">
+                    <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+            			<p>Our crack team is searching now... Patience!</p>
+                        <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px;"/>
+                    </div>
+                </div>
+                <div ng-show="finishedgeofireload && results==null">
+                    <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+                        <img ng-src="img/gif/no_results.gif" height="200px" style="border-radius: 10px;"/>
+                    </div>
+                    <button class= "button button-full button-calm" ng-click="contactUs()">
+                    Listing Or Suggesting a Workshop? Contact Us.
+                    </button>
+                </div>
+                <div align="center" style="color:#333;padding-top: 8px;padding-bottom: 8px;min-height: 30px;background-color: #f5f5f5;color: #222;font-weight: 500;    position: relative;z-index: 2;display: block;margin: -1px;font-size: 16px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;" ng-hide="!expiredArray || expiredArray.length==0">
+                Out of Slots
+                </div>
+                <div ng-if="expiredArray" style="height:13px;background-color:#f2f2f2"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px" ng-repeat="workshop in expiredArray" ui-sref="tab.workshops-individual({workshopId:workshop.key, keyWord:search.keyWordtoPass})">
+                        <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div style="position:absolute;height:110px;z-index:99;width:100%;background-color:white;opacity:0.6;">
+                        </div>
+                        <div style="text-align: center; color: white; background-color:#ff4200; width:30%;margin-top:40px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;position:absolute;z-index:99">
+                                Out of Slots
+                        </div>
+                    <div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+                        <p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+                        <p style="line-height:14px;;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+	           </ion-content>
+            </ion-slide>
+            <ion-slide style="text-align:left">
+                <ion-content class="has-footer">
+                <div ng-if="popular" style="height:13px;background-color:#f2f2f2"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px" ng-repeat="workshop2 in popular" ui-sref="tab.workshops-individual({workshopId:workshop2.key, keyWord:search.keyWordtoPass})">
+                        <div ng-style="{'background-image':'url({{workshop2.cover}})'}" ng-if="workshop2.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop2.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop2.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop2.price}}
+                            </div>
+                        </div>
+                    <div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+                        <p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop2.provider.providerName}}</p>
+                        <p style="line-height:14px;;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop2.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop2.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop2.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="row" ng-show="!finishedpopularload">
+                    <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+                        <p>Our crack team is searching now... Patience!</p>
+                        <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px;"/>
+
+                    </div>
+                </div>
+                <div ng-show="finishedpopularload && popular==null">
+                    <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+                        <img ng-src="img/gif/no_results.gif" height="200px" style="border-radius: 10px;"/>
+                    </div>
+                    <button class= "button button-full button-calm" ng-click="contactUs()">
+                    Listing Or Suggesting a Workshop? Contact Us.
+                    </button>
+                </div>
+               </ion-content>
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>

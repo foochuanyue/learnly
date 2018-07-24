@@ -1,0 +1,74 @@
+<ion-view view-title="Your Education">
+
+  <ion-content padding="true" style="background-color: #594443">
+    <div class="item">
+
+      <div class="item item-divider">
+        <button class="button button-small" ng-model="button0" ng-class="(schoolCountry=='Singapore')?'button-positive':'button-stable'" ng-click="getSchools('Singapore'); button0.clicked=!button0.clicked;">
+          <img src="img/countries/Singapore.png" style="width: 30px"/> SG
+        </button>
+        <button class="button button-small" ng-model="button0" ng-class="(schoolCountry=='MY')?'button-positive':'button-stable'" ng-click="getSchools('MY'); button0.clicked=!button0.clicked;">
+          <img src="img/countries/Malaysia.png" style="width: 30px"/> MY
+        </button>
+        <button class="button button-small" ng-model="button1" ng-class="(schoolCountry=='Australia')?'button-positive':'button-stable'" ng-click="getSchools('Australia'); button1.clicked=!button1.clicked;">
+          <img src="img/countries/Australia.png" style="width: 30px"/> AU
+        </button>
+        <button class="button button-small" ng-model="button2" ng-class="(schoolCountry=='UK')?'button-positive':'button-stable'" ng-click="getSchools('UK'); button2.clicked=!button2.clicked;">
+          <img src="img/countries/UK.png" style="width: 30px"/> UK
+        </button>
+        <button class="button button-small" ng-model="button3" ng-class="(schoolCountry=='USA')?'button-positive':'button-stable'" ng-click="getSchools('USA'); button3.clicked=!button3.clicked;">
+          <img src="img/countries/USA.png" style="width: 30px"/> US
+        </button>
+        <button class="button button-small" ng-model="button4" ng-class="(schoolCountry=='Others')?'button-positive':'button-stable'" ng-click="getSchools('Others'); button4.clicked=!button4.clicked;">
+          <img src="img/schools/Others/Others.png" style="width: 30px"/> NA
+        </button>
+      </div>
+      <div class="item item-divider">Find Your Institution</div>
+      <form name='educationForm'>
+      <ion-list>
+        <div ng-repeat="(key,value) in schools">
+          <ion-item class="item-dark"
+                    ng-click="toggleGroup(key)"
+                    ng-class="{active: isGroupShown(key)}">
+              <i class="icon" ng-class="isGroupShown(key) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{key}}
+          </ion-item>
+          <!--
+          <ion-item class="item-accordion"
+                    ng-repeat="subject in category.subjects"
+                    ng-show="isGroupShown(category)">
+            {{subject}}
+          </ion-item>
+      -->
+          <label class="item item-radio" ng-repeat="(name, details) in value" ng-show="isGroupShown(key)">
+           <ion-radio class="item-accordion" name="schools" ng-model="educationUpdateHolder.sch" ng-value="details">
+           <img ng-src="{{details.pic}}" style="width:25px; height:25px;">
+           {{name}}
+
+
+          </ion-radio>
+          </label>
+
+
+        </div>
+      </ion-list>
+
+        <div class="item item-divider"></div>
+        <label class="item item-input">
+          <span class="input-label">Major</span>
+          <input type='text' name='major' placeholder='Your Major' ng-model='educationUpdateHolder.major'>
+        </label>
+
+
+        <button ng-disabled='!educationForm.$valid||userLoading'
+          class="tabs button button-block button-positive" ng-click="verifyEducation()">
+            Update Education
+        </button>
+
+      </form>
+
+    </div>
+  </ion-content>
+
+</ion-view>

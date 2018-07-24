@@ -1,0 +1,53 @@
+<div class='modal'>
+  <header class='bar bar-header bar-calm'>
+    <h1 class='title'>Spruce Your Profile</h1>
+    <!--
+    <div class='button button-clear' ng-click='closeModal(1)'>
+      <span class='icon ion-close'></span>
+    </div>
+    -->
+  </header>
+  <ion-content has-header='true' padding='true' style='padding-top: 20%; background-color: #594443'>
+  <!--
+    <h3 class='text-center'>Current Picture</h3>
+    <div class="item item-image" style="width: auto">
+        <img class="" ng-src="{{user.face}}" style="border-radius: 10px">
+    </div>
+-->
+    <div class="list card">
+
+      <div class="ion-profile-picture" ng-click="uploadImage()">
+        <img id="profile-image" ng-src="{{user.face}}">
+      </div>
+<!--
+      <a class="item item-icon-left assertive" href="#">
+        <i class="icon ion-music-note"></i>
+        Start listening
+      </a>
+-->
+    <label class="item item-input">
+      <span class="input-label assertive">Real Name</span>
+      <input type="text" ng-model="user.name" required>
+    </label>
+    <label class="item item-input">
+      <span class="input-label assertive">Email</span>
+      <input type="email" ng-model="user.email" required>
+    </label>
+    <label class="item item-input">
+      <span class="input-label assertive">Username</span>
+      <input type="text" ng-model="user.alias" required>
+    </label>    
+
+<!--
+    <label class="item item-input assertive">
+      <span class="input-label">Phone Number</span>
+      <input type="tel" ng-model="user.tel">
+    </label>
+-->
+    </div>
+
+    <button class="button button-full button-positive" ng-click='saveUser(user.name, user.email, user.alias)'>
+      Looks Good
+    </button>
+  </ion-content>
+</div>

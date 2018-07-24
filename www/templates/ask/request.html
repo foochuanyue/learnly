@@ -1,0 +1,241 @@
+<ion-view title="Request">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-clear no-animation" ng-click="contactUs()">
+      <i class="ion-person-stalker" style="color: white"> Helpdesk</i>
+    </button>
+
+  </ion-nav-buttons>
+
+    <ion-content>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+            <div class="col" style="text-align: center;">
+                <span ng-show="!edittingMode"><p>We will notify up to 10 tutors on your behalf</p>
+                <p>Please wait for them to contact you in the next 48 hours</p></span>
+                <p><b>Coordinators <span ng-click="contactUs()" style="color: #ef473a;">contact us</span> about Incentive Program</b></p>
+            </div>
+        </div>
+        <div class="item item-divider">
+            I am a ... (please select)
+        </div>
+        <div class="button-bar" style="border: 1px solid #0c63ee;">
+            <ion-radio class= "col center" ng-model="job.role" ng-value="'Student'" name = "job-role">
+                Student
+            </ion-radio>
+            <ion-radio class= "col center" ng-model="job.role" ng-value="'Parent'" name = "job-role">
+                Parent
+            </ion-radio>
+            <ion-radio class= "col center" ng-model="job.role" ng-value="'Centre'" name = "job-role">
+                Centre
+            </ion-radio>
+        </div>
+        <div class="item item-divider">
+                Choose a Subject
+        </div>
+        <li class="item-accordion" style="list-style-type:none" ng-if="(job.category)">
+            <label class="item item-avatar item-button-right item-icon-right">
+              <img ng-src="{{getSkillPic(job.category)}}">
+              <h2>{{job.category}}</h2>
+              <!--<p>Level</p>-->
+              <button class="button button-small button-assertive" ng-click="job.category = null;" ng-if="job.category">
+                Reset
+              </button>
+           </label>
+        </li>
+
+
+        <div ng-repeat="category in categories" ng-if="(!job.category)">
+          <ion-item class="item-dark"
+                    ng-click="toggleGroup(category)"
+                    ng-class="{active: isGroupShown(category)}">
+              <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+            {{category.name}}
+          </ion-item>
+
+            <label class="item item-radio" ng-repeat="subject in category.subjects" ng-show="isGroupShown(category)">
+                <ion-radio class="item-accordion" ng-model="job.category" ng-value="subject" ng-click="resizeScroll()">
+                    <div class="item item-avatar">
+                        <img ng-src="{{getSkillPic(subject)}}">
+                        <h2>{{subject}}</h2>
+                    </div>
+                </ion-radio>
+            </label>
+        </div>
+
+        <div class="list" ng-show="job.category">
+            <div class="item item-divider">
+                Requesting (please select)
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;">
+                <ion-radio class= "col center" ng-model="job.requestNature" ng-value="'Homework'" name = "job-nature" ng-click="resizeScroll()">
+                    <i class="icon ion-briefcase"></i>
+                    Ask Homework
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.requestNature" ng-value="'Class'" name = "job-nature" ng-click="resizeScroll()">
+                    <i class="icon ion-loop"></i>
+                    Weekly Class
+                </ion-radio>
+            </div>
+        </div>
+            <div class="item item-divider" ng-if="job.requestNature=='Class'">
+                Class Size
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;" ng-if="job.requestNature=='Class'">
+                <ion-radio class= "col center" ng-model="job.tuitionType" ng-value="'Private'" name = "tuition-type" ng-click="job.tuitionGender=false;resizeScroll();">
+                    <i class="icon ion-android-person"></i>
+                    Private
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.tuitionType" ng-value="'Group'" name = "tuition-type" ng-click="resizeScroll()">
+                    <i class="icon ion-ios-people"></i>
+                    Group
+                </ion-radio>
+            </div>
+            <div class="item item-divider" ng-show="(job.tuitionType=='Private')&&job.requestNature=='Class'">
+                Preferred Gender
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;" ng-if="(job.tuitionType=='Private')&&job.requestNature=='Class'">
+                <ion-radio class= "col center" ng-model="job.tuitionGender" ng-value="'Male'" name = "tuition-gender">
+                    <i class="icon ion-man"></i>
+                    Male
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.tuitionGender" ng-value="'Female'" name = "tuition-gender">
+                    <i class="icon ion-woman"></i>
+                    Female
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.tuitionGender" ng-value="false" name = "tuition-gender">
+                    <i class="icon ion-happy-outline"></i>
+                    No Pref
+                </ion-radio>
+            </div>
+            <div class="item item-divider item-button-right item-icon-right" ng-show="job.requestNature=='Homework'">
+                    Upload Picture of Question (Required)
+                    <i class="icon assertive ion-close-circled" ng-show="job.pic" ng-click='job.pic=null'></i>
+            </div>
+            <span ng-if="job.requestNature=='Homework'">
+            <div class="item item-image" style="width: auto" ng-show="job.pic">
+                <img ng-src="{{job.pic}}" style="border-radius: 10px">
+            </div>
+            <div class="item item-image" style="width: auto" ng-hide="job.pic" >
+                <a class="button button-icon icon ion-ios-camera" ng-click='job.pic="img/gif/loading_shaking.gif"; showMediaSelector();'></a>
+            </div>
+            </span>
+            <div class="item item-divider" ng-show="(job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class')">
+                Writeup for {{choice}}
+              <div class="col" style="text-align: left;">
+                  <p>Explain your issue, desired outcome, timeline</p>
+              </div>
+            </div>
+            <div class="list list-inset" ng-show="(job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class')">
+            <label class="item item-text-wrap item-input" >
+                <textarea msd-elastic name="brief" placeholder="My child is ... " ng-model="job.writeup">
+                </textarea>
+                <span ng-if="job.writeup.length<=20">Your writeup is too short</span>
+            </label>
+            </div>
+            <div class="item item-divider" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                Your <span ng-if="choice=='Request'">Budget</span><span ng-if="choice=='Offer'">Offer Rate</span> ({{defaultCountry.currency}}<span ng-if="job.requestNature=='Class'">/hr</span>)
+            </div>
+            <div class="item item-body" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                <input type="text" class="js-range-slider" />
+            </div>
+            <div class="item item-divider" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                Lesson Duration (hrs)
+            </div>
+             <div class="item item-body" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                <input type="text" class="js-range-slider2" />
+            </div>
+            <div class="item item-divider" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                Lesson Frequency ({{job.frequencyType}})
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;" ng-show="job.writeup&&(job.writeup.length>20)&&job.requestNature=='Class'">
+                <ion-radio class= "col center" ng-model="job.frequencyType" ng-value="'Daily'" ng-click="resetFrequency()">
+                    Daily
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.frequencyType" ng-value="'Weekly'">
+                    Weekly
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.frequencyType" ng-value="'Monthly'">
+                    Monthly
+                </ion-radio>
+            </div>
+             <div class="item item-body" ng-show="job.writeup&&(job.writeup.length>20)&&job.frequencyType!='Daily'&&job.requestNature=='Class'">
+                <input type="text" class="js-range-slider3" />
+            </div>
+
+            <div class="item item-divider" ng-show="(job.writeup.length>20)&&job.requestNature=='Class'">
+                Lesson Location
+            </div>
+
+            <div class="item item-input" ng-show="(job.writeup.length>20)&&job.requestNature=='Class'">
+                <input ng-change="addressChanged()" type="text" placeholder="Location or Area" ng-model="job.location"/>
+                <span ng-if="(job.writeup.length>20)" ng-click="getCurrentLocation()"><i class="ion-ios-navigate-outline" style="font-size:30px;margin-right:20px" ng-if="!locationLoading"></i><ion-spinner icon="spiral" ng-if="locationLoading" style="margin-right:20px;"></ion-spinner></span>
+            </div>
+            <div ng-show="(job.writeup.length>20)&&job.requestNature=='Class'" id="map" data-tap-disabled="true"></div>
+            <div ng-show="(job.writeup.length>20)&&job.requestNature=='Class'" style="position:absolute;height:200px;z-index:99;width:100%;margin-top:-200px"></div>
+
+        <div class="item item-divider" style="text-align: center;" ng-if="(job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class')">
+        Post Preview
+        </div>
+        <div class="list card" style="color: grey; background:#EEE;" ng-if="(job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class')">
+          <div class="item item-avatar" ng-if="(choice=='Request')">
+            <img ng-src="{{user.face}}" err-src="img/assets/placeholder.png">
+            <span ng-if="job.requestNature!='Homework'"><a class="positive askprice"><b>{{defaultCountry.currency}}{{job.price|currency:"":0}}<span ng-if="job.tuitionType">/hr</span></b></a></span>
+            <h2>{{user.name}}</h2>
+            <p>Now</p>
+            </div>
+            <div class="item item-body" style="text-align: center;">
+              <a class="assertive">
+                {{job.role}} requesting <b>{{job.category}}</b>
+                <i class="icon ion-android-person" ng-show="job.tuitionType=='Private'&&job.requestNature=='Class'"></i>
+                <i class="icon ion-ios-people" ng-show="job.tuitionType=='Group'&&job.requestNature=='Class'"></i>
+                <b><span ng-show="job.tuitionType&&job.requestNature=='Class'">{{job.tuitionType}}</span> {{job.requestNature}}</b>
+                <br>
+                <span ng-show="job.requestNature=='Class'">Lesson Details: <b>{{job.duration}} hrs/lesson <i class="ion-ios-alarm"></i><span ng-if="job.frequency!=1"> {{job.frequency}} lessons </span> {{job.frequencyType}}</b></span>
+                </a>
+              <img class="full-image" ng-src="{{job.pic}}" ng-show="job.pic&&job.requestNature=='Homework'"/>
+              <p>
+              {{job.writeup}}
+              </p>
+              <p>
+                <a class="assertive" ng-show="job.requestNature=='Class'&&job.tuitionGender&&job.tuitionType=='Private'">Prefers <i class="icon ion-woman" ng-show="job.tuitionGender=='Female'"></i><i class="icon ion-man" ng-show="job.tuitionGender=='Male'"></i> {{job.tuitionGender}}</a><br>
+
+                <span ng-show="job.requestNature=='Class'"><a class="royal" ng-if="job.location"><b> <i class="icon ion-ios-location"></i> {{job.location}}</b> </a></span>
+              </p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+              <p class="bar-calm">
+                <a><b>Open To Tutors</b></a>
+              </p>
+
+            </div>
+        </div>
+         <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-hide="(job.role&&job.category&&job.requestNature&&job.writeup&&job.location&&(job.pic!='img/gif/loading_shaking.gif'))">
+            <div class="col" style="text-align: center; color: #ef473a;">
+                <p><b>Your post is incomplete</b></p>
+                <p><b>Please fill out the required details</b></p>
+            </div>
+        </div>
+       <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+            <div class="col" style="text-align: center;">
+                <p><b>No solicitation of tutor commission allowed</b></p>
+                <span ng-show="!edittingMode"><p>We will notify up to 10 tutors on your behalf</p>
+                <p>Please wait for them to contact you in the next 48 hours</p></span>
+            </div>
+        </div>
+
+        <button class="button button-block button-positive" ng-click="submitJobButtonClicked = true; addJob(job,job.price,job.writeup,job.location,job.pic,'Request',job.category,job.duration,job.frequency,job.frequencyType,job.requestNature);" ng-show="job.role&&job.category&&((job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class'))&&(job.writeup.length>20)&&job.location&&(job.pic!='img/gif/loading_shaking.gif')&&job.locationLon&&job.locationLat&&!locationLoading&&!edittingMode&&!submitJobButtonClicked">
+            Submit
+        </button>
+        <button class="button button-block button-positive" ng-show="submitJobButtonClicked">
+            <div class="center-vertical-horizontal">
+              Please Wait 
+              <ion-spinner class="button-spinner"></ion-spinner>
+            </div>
+        </button>        
+        <button class="button button-block button-positive" ng-click="updateRequest(job)" ng-show="job.role&&job.category&&((job.pic&&job.requestNature=='Homework')||(job.tuitionType&&job.requestNature=='Class'))&&(job.writeup.length>20)&&job.location&&(job.pic!='img/gif/loading_shaking.gif')&&job.locationLon&&job.locationLat&&!locationLoading&&edittingMode">
+            Update
+        </button>
+
+    </div>
+
+    </ion-content>
+</ion-view>

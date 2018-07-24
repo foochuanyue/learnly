@@ -1,0 +1,40 @@
+<div class="modal">
+	<header class="bar bar-header bar-calm">
+	  <h1 class="title">Lesson Area</h1>
+	  <div class="button button-clear" ng-click="closeModal(4);"><span class="icon ion-close"></span></div>
+	</header>
+	<ion-content has-header="true" padding="true" style="padding-top: 50px;">
+		
+    <button class="button button-block button-positive" ng-click="saveLocation();closeModal(4);" ng-show="profile.location&&profile.locationLat&&profile.locationLon&&geoHash&&!locationLoading" style="margin-top:10px;margin-bottom:20px;font-size:20px">
+            <b>Tap to Save Location</b>
+        </button>
+				
+    <button class="button button-block" ng-hide="profile.location&&profile.locationLat&&profile.locationLon&&geoHash&&!locationLoading" style="background-color:gray;margin-top:10px;margin-bottom:20px;">
+            Please Wait for the location to Load...
+        </button>
+		<div class="item item-divider">Location in Profile</div>
+		<div class="item item-input">
+                <input type="text" placeholder="Location or Area" ng-model="profile.location" ng-change="addressChanged()" />
+                <span ng-click="getCurrentLocation()"><i class="ion-ios-navigate-outline" style="font-size:30px;margin-right:20px" ng-if="!locationLoading"/><ion-spinner icon="spiral" ng-if="locationLoading" style="margin-right:20px"></ion-spinner></span>
+            </div>
+            <div id="map2" data-tap-disabiled="true"></div>
+            <div style="position:absolute;height:200px;z-index:99;width:100%;margin-top:-200px"></div>
+
+<div ng-if="defaultCountry.value == 65">
+				<div class="item item-divider">Select MRT Station</div>
+        <div ng-repeat="place in places">
+
+          <ion-item class="item" ng-style="{'background-color': place.color}"
+                    ng-click="toggleGroup(place)"
+                    ng-class="{active: isGroupShown(place)}">
+              <i class="icon" ng-class="isGroupShown(place) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            <b style="color: white">{{place.name}}</b>
+          </ion-item>
+          	<label class="item item-accordion" ng-repeat="(key,value) in place.stations" ng-show="isGroupShown(place)" ng-click="confirmLocation('Update location to '+value.name,value);">
+	         {{value.name}}
+	        </label>
+        </div>
+			</div>
+	</ion-content>
+</div>

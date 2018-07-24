@@ -1,0 +1,109 @@
+<ion-view view-title="{{viewTitle}}">
+  <ion-content>
+  <div ng-if="isVendor=='false'">
+  	<p style="text-align:center;"><img ng-src="img/LearnlyLogoBanner.png" width="100%"/>
+  	</p>
+  	<p style="margin-left:30px;font-size:15px">
+  	<b>Registration Code:</b> {{referenceID}}
+  	<br>
+  	<b>Name:</b> {{Booking.username}}
+  	<br>
+  	<b>Lesson provider:</b> {{Booking.provider.providerName}}
+    <br>
+    <b>Venue:</b> {{Booking.location.name}}
+    <br>
+    <b>Email:</b> {{Booking.provider.providerEmail}}
+  	<br>
+  	</p>
+  	<br>
+  	<p ng-if="Booking.ticketType=='date'" style="margin-left:30px;font-size:15px">
+  	<b>Date:</b> {{Booking.bookedstart| date:"MMM d, y"}}
+  	<br>
+  	<b>Time:</b> {{Booking.bookedstart| date:"h:mm a"}} to {{Booking.bookedend| date:"h:mm a"}}
+  	<br>
+  	</p>
+    <p ng-if="Booking.ticketType=='fixedslots'" style="margin-left:30px;font-size:15px">
+    <b>First Lesson:</b> {{Booking.bookedstart| date:"MMM d, y, h:mm a"}}
+    <br>
+    {{Booking.bookeddescription}}
+    <br>
+    </p>
+    <p ng-if="Booking.ticketType=='general'" style="margin-left:30px;font-size:15px">
+    Please contact the vendor to arrange your timing.
+    <br>
+    </p>
+  	<br>
+  	<p style="margin-left:30px;margin-right:30px;font-size:15px;border-width:1px;border-style:solid;border-color:gray;padding:10px 10px 10px 10px">
+  	<b><u>Transaction Details</u></b>
+  	<br>
+  	<b>Paid Amount:</b> ${{Booking.paymentprice}}
+  	<br>
+  	<b>Payment Date:</b> {{Booking.paymentmade| date:"d/MM/y"}}
+  	<br>
+    <b>Quantity Purchased:</b> {{Booking.paymentquantity}}
+  	</p>
+  	<br>
+  	<p style="margin-left:30px;font-size:15px">
+  	Thank you for using Learnly!
+  	</p>
+
+  	<p style="margin-left:30px;font-size:10px">
+  	*Please refer to belearnly.com for terms and conditions.
+  	</p>
+  </div>
+  <div ng-if="isVendor == 'true'">
+  	<p style="text-align:center;"><img ng-src="img/LearnlyLogoBanner.png" width="100%"/>
+  	</p>
+  	<div style="margin-left:30px;font-size:15px">
+  	Hi Valerie Studios!
+  	<br>
+  	<br>
+  	<b>Congratulations!</b>
+    <br>
+    You have a new sign up for:
+  	<br>
+  	<b>{{Booking.workshopTitle}}</b>
+  	<br>
+    <p ng-if="Booking.ticketType=='date'">
+  	<b>{{Booking.bookedstart| date:"MMM d, y"}}
+  	<br>
+  	{{Booking.bookedstart| date:"h:mm a"}} to {{Booking.bookedend| date:"h:mm a"}}</b>
+  	<br>
+    </p>
+    <p ng-if="Booking.ticketType=='fixedslots'">
+    <b>First Lesson: {{Booking.bookedstart| date:"MMM d, y, h:mm a"}}</b>
+    <br>
+    {{Booking.bookeddescription}}
+    <br>
+    </p>
+  	<br>
+  	The following are the user's details:
+  	<br>
+  	<br>
+  	Registration code: {{referenceID}}</b>
+  	<br>
+  	Name: {{Booking.username}}
+  	<br>
+  	Email: {{Booking.useremail}}
+    <br>
+    <br>
+    <p style="margin-right:30px;font-size:15px;border-width:1px;border-style:solid;border-color:gray;padding:10px 10px 10px 10px">
+    <b><u>Transaction Details</u></b>
+    <br>
+    <b>Paid Amount:</b> {{Booking.paymentprice}}
+    <br>
+    <b>Payment Date:</b> {{Booking.paymentmade| date:"d/MM/y"}}
+    <br>
+    <b>Quantity Purchased:</b> {{Booking.paymentquantity}}
+    </p>
+  	<br>
+  	<br>
+  	Thank you for using Learnly!
+  	<br>
+  	<br>
+  	All the best,
+  	<br>
+  	The Learnly Team
+  	</div>
+  </div>
+</ion-view>

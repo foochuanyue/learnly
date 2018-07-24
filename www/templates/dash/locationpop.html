@@ -1,0 +1,12 @@
+<ion-popover-view>
+	<ion-header-bar>
+		<h1 class="title">Select default country</h1>
+	</ion-header-bar>
+			 <ion-content>
+				 <ion-list>
+		 			<ion-item ng-repeat="option in countryOptions" ng-click="selectCountry(option)">
+            <img src={{option.flag}} style="width: 30px"/> 
+		 			</ion-item>
+		 		</ion-list>
+			 </ion-content>
+		 </ion-popover-view>

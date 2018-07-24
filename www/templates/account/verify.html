@@ -1,0 +1,63 @@
+<ion-view view-title="Verification" cache-view="true">
+
+  <ion-content class="has-header" ng-show="user">
+
+    <ion-list>
+      <ion-item class="item item-icon-left item-button-right" ng-repeat="(key,value) in labels" type="item-text-wrap">
+
+          <i class="icon {{value.icon}}"></i>
+
+          {{value.name}}
+<!--
+        class="item item-icon-left item-button-right"
+        ng-class="{item-icon-left: !label.img, item-thumbnail-left: label.img}"
+        ng-class="{value.img? 'item item-icon-left item-button-right' : 'item item-icon-left item-thumbnail-right'}"
+        item-thumbnail-left
+        <img ng-src="{{user.face}}" style="border-radius: 10px">
+-->
+        <button class="button button-clear" ng-if="value.mandatory&&!value.img">
+          <h5 style="color: red;">Required</h5>
+          <!--
+          <i class="icon ion-paperclip icon-accessory"></i>
+-->
+        </button>
+        <button class="button button-clear" ng-if="!value.mandatory&&!value.img" ng-click="callFunction(value.action, key)">
+          <h5 style="color: blue;">Attach</h5>
+          <i class="icon ion-paperclip icon-accessory"></i>
+        </button>
+        <button class="button button-clear" ng-if="value.img" ng-click="value.img = null;">
+          <i class="icon ion-close-circled icon-accessory" style="color: red;"></i>
+          
+          <img ng-src="{{value.img}}" style="border-radius: 10px; width: 42px">
+        </button>
+        <p>{{value.description}}</p>
+
+      </ion-item>
+    </ion-list>
+    <ion-slide-box style="padding-top: 30px;" show-pager="false">
+      <ion-slide>
+        <h5 style="color: blue;">Verification takes between 3 to 5 days</h5>
+        <button class="button button-balanced" style="width: 288px" ng-click="showSurvey()">
+          Submit
+        </button> 
+        <h6>We respect your privacy</h6>
+        <h6>Your information is kept confidential</h6>
+         <div><a onclick="window.open('https://belearnly.com/pages/terms-conditions', '_system', 'location=yes'); return false;"><b>Terms of Use and Privacy Policy</b></a></div>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-content>
+
+  <ion-content class="has-header" ng-hide="authData">
+    <ion-slide-box style="padding-top: 140px;" show-pager="false">
+      <ion-slide>
+        <img ng-src="img/assets/nologin.png" height="140px" >
+        <h3>Sorry! Do We Know You?</h3>
+        <button class="button button-balanced" style="width: 288px" ng-click="logout()">
+          Sign In Now
+        </button>
+        <h5>To Create Your Learnly Profile</h5>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>

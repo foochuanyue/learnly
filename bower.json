@@ -1,0 +1,12 @@
+{
+  "name": "beLearnly",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.3.1"
+  },
+  "dependencies": {
+    "ionic-ratings": "~0.2.0",
+    "ionic-datepicker": "^1.1.0",
+    "ionic-timepicker": "^0.5.1"
+  }
+}

@@ -1,0 +1,54 @@
+<ion-view can-swipe-back="false">
+  <ion-content>
+  	<h4 style="padding-left:20px;margin-top:20px;">Choose Your Class!
+    <p style="color:#fbb03b;font-size:20px;text-align:right;padding-right:20px;margin-top:-30px"><b>${{workshop.price}}</b></p></h4>
+  	<ion-list>
+  		<div ng-if="workshop.ticketType=='date'" style="height:13px;background-color:#f2f2f2"></div>
+  		<div ng-if="workshop.ticketType=='date'" style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:70px;" ng-repeat="item in workshopArray" ng-click="selectItem($index)" ng-class="{buttonActive:checkedIndex==$index}">
+  		<p style="padding-top:20px; padding-left:20px;font-size:13px;">
+  		<img ng-src="img/Unfilled.png" style="width:10px;height:10px;margin-right:10px" ng-if="!item.checked"/>
+  		<img ng-src="img/Filled.png" style="width:10px;height:10px;margin-right:10px" ng-if="item.checked"/>
+      	<b>{{item.startTime| date:"MMM d, y"}}</b>, {{item.startTime| date:"EEEE, h:mm a"}} to {{item.endTime| date:"h:mm a"}}
+      		</p>
+      	</div>
+
+  		<div ng-if="workshop.ticketType=='general'" style="height:13px;background-color:#f2f2f2"></div>
+  		<div  ng-if="workshop.ticketType=='general'" style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:70px;" ng-repeat="item in workshopArray" ng-click="selectItem($index, item.uses, item.price)" ng-class="{buttonActive:checkedIndex==$index}">
+  		<p style="padding-top:20px; padding-left:20px;font-size:13px; ">
+  		<img ng-src="img/Unfilled.png" style="width:10px;height:10px;margin-right:10px" ng-if="!item.checked"/>
+  		<img ng-src="img/Filled.png" style="width:10px;height:10px;margin-right:10px" ng-if="item.checked"/>
+      	<b>{{item.uses}} lessons</b>
+      		</p>
+      	</div>
+
+        <div ng-if="workshop.ticketType=='fixedslots'" style="height:13px;background-color:#f2f2f2"></div>
+      <div ng-if="workshop.ticketType=='fixedslots'" style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:90px;" ng-repeat="item in workshopArray" ng-click="selectItem($index)" ng-class="{buttonActive:checkedIndex==$index}">
+      <p style="padding-top:20px; padding-left:20px;font-size:13px;">
+      <img ng-src="img/Unfilled.png" style="width:10px;height:10px;margin-right:10px" ng-if="!item.checked"/>
+      <img ng-src="img/Filled.png" style="width:10px;height:10px;margin-right:10px" ng-if="item.checked"/>
+        <b>First Lesson: {{item.startTime| date:"MMM d, y, EEEE, h:mm a"}}</b>
+        <br>
+        <text style="padding-left:20px">{{item.Description}}</text>
+          </p>
+        </div>
+	</ion-list>
+
+
+  <div class="list card">
+
+      <label class="item item-input assertive">
+          <span class="input-label">Quantity</span>
+          <input type="number" ng-model="bookingQuantity" required>
+      </label>
+
+
+  </div>
+
+
+
+
+
+	<button class="button" style="background-color:#fbb03b;color:white;align:center;width:50%;margin-left:25%;border-radius:5px;margin-top:20px" ng-if="workshop" ng-click="doCheckout(bookingQuantity)" ng-disabled="!selected"><b>Proceed</b>
+	</button>
+  </ion-content>
+</ion-view>

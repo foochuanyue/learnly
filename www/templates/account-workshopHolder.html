@@ -1,0 +1,74 @@
+<ion-view view-title="{{viewTitle}}">
+  <ion-content>
+  <div>
+    <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:200px;float:left;width:100%;background-size:cover;">
+      <div style="text-align: center; color: white; background-color:black; width:20%;margin-top:155px;height:30px;padding-top:5px;font-size:20px">
+        ${{workshop.price}}
+      </div>
+    </div>
+    <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop.cover" style="height:200px;float:left;width:100%;background-size:cover;">
+      <div style="text-align: center; color: white; background-color:#fbb03b; width:20%;margin-top:155px;height:30px;padding-top:5px;font-size:20px">
+        ${{workshop.price}}
+      </div>
+    </div>
+    </div>
+    <div style="text-align:center; padding-top:220px"">
+      <p style="font-size:17px;text-align:left;margin-left:20px;margin-right:20px""><b>{{workshop.workshopTitle}}</b></p>
+      <p ng-if="!showDescription" style="margin-top:-5px;text-align:left;margin-left:20px;margin-right:20px;display: -webkit-box !important; -webkit-line-clamp: 3   !important; -webkit-box-orient: vertical !important; word-wrap:break-word; overflow:hidden;">{{workshop.workshopDescription}}
+      <p ng-if="!showDescription" style="color:orange;text-align:center;margin-top:-5px;" ng-click="ReadMore()">Read More</p>
+      </p>
+      <textarea msd-elastic readonly ng-if="showDescription" style="margin-top:-5px;text-align:left;padding-left:20px;padding-right:20px; width:100%" ng-model="workshop.workshopDescription"></textarea>
+      <!--<p style=" margin-top:-10px; bottom: 0; left: 0;width: 100%; text-align: center; padding: 5px 0;background-image: linear-gradient(to bottom, transparent, #fbb03b);">Read More</p>-->
+    </div>
+       <div style="height:1px; background-color:gray;margin-left:10px;margin-right:10px;opacity:0.6;">
+    </div>
+    <div ng-if="workshop.ticketType=='general'" style="text-align:left;margin-top:10px">
+    <p style="font-size:13px;margin-left:20px; color:#333333;">
+      Opening Hours
+      <ul style="margin-left:40px;list-style-type:circle;margin-top:-5px">
+      <li ng-repeat="item in workshop.Opening">
+      <b>{{item}}</b>
+      </li>
+    </ul>
+    </p>
+    <div style="height:13px;background-color:#f2f2f2"></div>
+      <div style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:70px;" ng-repeat="(key, item) in workshop.ticket" ui-sref="tab.account-workshopSchedule({workshopId:workshopId, workshopTitle:workshop.workshopTitle, workshopStart:item.startTime, workshopEnd:item.endTime, workshopBookingId:key, category:search.keyWordtoPass, expiryTime:workshop.expiryTime})">
+      <p style="text-align:center;padding-top:20px;font-size:13px;">
+        <b>View Sign Ups</b>
+          </p>
+        </div>
+    </div>
+    <div ng-if="workshop.ticketType=='date'" style="text-align:left;margin-top:10px">
+    <p style="font-size:13px;margin-left:20px; color:#333333;">
+      Workshop Schedules and Sign-ups
+    </p>
+    <div style="height:13px;background-color:#f2f2f2"></div>
+      <div style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:70px;" ng-repeat="(key, item) in workshop.workshopSchedule" ui-sref="tab.account-workshopSchedule({workshopId:workshopId, workshopTitle:workshop.workshopTitle, workshopStart:item.startTime, workshopEnd:item.endTime, workshopBookingId:key, category:search.keyWordtoPass, expiryTime:item.expiryTime})">
+      <p style="padding-top:20px; padding-left:20px;font-size:13px;">
+      <img ng-src="img/Unfilled.png" style="width:10px;height:10px;margin-right:10px"/>
+        <b>{{item.startTime| date:"MMM d, y"}}</b>, {{item.startTime| date:"EEEE, h:mm a"}} to {{item.endTime| date:"h:mm a"}}
+          </p>
+        </div>
+    </div>
+     <div ng-if="workshop.ticketType=='fixedslots'" style="text-align:left;margin-top:10px">
+    <p style="font-size:13px;margin-left:20px; color:#333333;">
+      Workshop Schedules and Sign-ups
+    </p>
+    <div style="height:13px;background-color:#f2f2f2"></div>
+      <div style="border-width:0px 13px 13px 13px; border-color:#f2f2f2;border-style:solid;height:90px;" ng-repeat="(key, item) in workshop.fixedSlots" ui-sref="tab.account-workshopSchedule({workshopId:workshopId, workshopTitle:workshop.workshopTitle, workshopStart:item.startTime, workshopEnd:item.endTime, workshopBookingId:key, category:search.keyWordtoPass, expiryTime:item.expiryTime})">
+      <p style="padding-top:20px; padding-left:20px;font-size:13px;">
+      <img ng-src="img/Unfilled.png" style="width:10px;height:10px;margin-right:10px"/>
+        <b>First Lesson: {{item.startTime| date:"MMM d, y, EEEE, h:mm a"}}</b>
+        <br>
+        <text style="padding-left:20px">{{item.Description}}</text>
+          </p>
+        </div>
+    </div>
+    <p style="margin-left:20px;margin-top:10px;color:#333333;font-size:13px">Location</p>
+    <div id="map" data-tap-disabled="true"></div>
+    <div style="position:absolute;height:200px;z-index:99;width:100%;margin-top:-200px" ui-sref="tab.account-map({Lat:workshop.location.lat, Lon:workshop.location.lon})"></div>
+    <p style="margin-left:20px;margin-top:10px"><i class="icon ion-ios-location"></i>  {{workshop.location.name}}
+      <div style="height:1px; background-color:gray;margin-left:10px;margin-right:10px;margin-top:10px;opacity:0.6;">
+    </div>
+  </ion-content>
+</ion-view>

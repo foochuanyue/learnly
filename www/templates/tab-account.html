@@ -1,0 +1,449 @@
+<ion-view view-title="{{viewTitle}}">
+
+  <ion-nav-buttons side="left">
+    <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="tab.account-settings">
+      <i class="ion-gear-a" style="color: white"> Settings</i>
+    </button>
+<!--
+    <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="settings" ng-click="showActionsheet()">
+      <i class="ion-gear-a" style="color: white"> Settings</i>
+    </button>
+
+-->
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="tab.account-favorites">
+      <i class="icon assertive ion-heart" style="color:#f26e84"></i>
+      <!--
+      <img class="icon" ng-src="img/gif/heart.gif" height="25px"/>-->
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header" style="background-color: #EEE">
+
+    <div ng-style="{'background-image':'url(img/referralbanner1.png)'}" style="height:110px;background-size:cover;background-position:center center;padding-top:15px">
+      <div style="text-align: left; color: white;height:50px;font-size:15px;font-weight:bold;margin-left:36%;font-family:OstrichSansBlack;">
+        Earn rewards when you invite students with your invite code
+        <br>
+        <div ng-if="user.alias" style="background-color:rgba(115,99,87,0.3);width:95%;height:30px;font-size:20px;padding:5px 0px 0px 5px;font-family:AvenirMedium;">
+          {{user.alias}}
+          <button class="button button-clear" ng-click="shareWithFriend()" style="float:right;font-size:30px;margin-top:-14px;color:white;">
+            <i class="icon ion-share"></i>
+          </button>
+        </div>
+        <span ng-click="openModal(2)" style="font-size:10px;font-family:weblysleekuiregular">How Learnly Referral Works</span>
+      </div>
+    </div>
+
+  <span ng-if="authData.provider!='anonymous'&&user.alias&&user.isWorkshopHolder!=true">
+    <ion-list  show-delete="shouldShowDelete"
+          show-reorder="shouldShowReorder"
+          can-swipe="listCanSwipe">
+    <ion-item class="item-remove-animate item-thumbnail-left" >
+      <img ng-click="openModal(6)" ng-if="user.face&&((user.face!='img/assets/placeholder.png')&&(user.face!='img/assets/nologin.png'))" ng-src="{{user.face}}" style="border-radius: 10px" err-src="img/assets/nologinpicture.png">
+      <img ng-click="openModal(6)" ng-if="(user.face=='img/assets/placeholder.png')||(user.face=='img/assets/nologin.png')" ng-src="img/assets/nologinpicture.png" style="border-radius: 10px">
+      <img ng-click="openModal(6)" ng-if="!user.face" ng-src="img/assets/nologinpicture.png" style="border-radius: 10px">
+      <div class="row">
+        <div class="col col-60"><b class="item-text-wrap">{{user.name}}</b>
+          <p>{{user.viewCount}} views</p>
+          <p style="color: green;">
+            <b am-time-ago="user.location.time"></b>
+
+            <!--
+            <b>{{user.balance | currency}}</b>
+          -->
+          </p>
+        </div>
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;" ui-sref="tab.account-review({coach: authData.uid})">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(user.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-user.rating)">
+          <p>{{followers}} follower<span ng-if="followers>1">s</span></p>
+          <!--
+          <p ng-if="user.ratingCount">{{user.ratingCount}} Reviews</p>
+        -->
+        </div>
+      </div>
+    </ion-item>
+
+      <div class="item item-divider">
+        Background
+        <div class="item-button-right">
+          <button class="button button-positive" ng-click="checkIfProfileIsComplete()" ng-if="(!user.verify)">
+                  <i class="icon ion-android-checkbox-outline"> Be A Tutor</i>
+          </button>
+          <button class="button button-energized" ng-click="showAlert('Pending Check','Verification can take 3 to 5 days. Please contact support@belearnly.com if you do not hear from us.')" ng-if="user.verify.inprogress&&(!user.verify.complete)">
+                  <i class="icon ion-loop"> Pending Check</i>
+          </button>
+          <button class="button button-balanced" ng-if="user.verify.complete">
+                  <i class="icon ion-checkmark-circled"> Verified</i>
+          </button>
+        </div>
+
+      </div>
+    	<ion-item class="item-text-wrap">
+    		<p class="item-input">
+        <textarea msd-elastic readonly name="brief" placeholder="Something about you to help students and tutors know you better 😃" ng-model="user.writeup" autofocus required>
+        </textarea>
+        <a class="item-icon-right" ui-sref="tab.account-editBackground()">
+           <i class="icon ion-compose" style="color: grey"></i>
+        </a>
+        <ion-option-button class="button-info"
+                           ng-click="openModal(1)">
+          Edit
+        </ion-option-button>
+        </p>
+    	</ion-item>
+
+
+
+      <ion-item>
+
+
+        <!--
+  class="item-thumbnail-left" style="min-height:50px padding-left:70px";
+          -->
+
+
+        <div class="row">
+          <img ng-src="{{user.education.sch.pic}}" style="width:50px; height:50px;" ui-sref="tab.account-education()">
+
+          <div class="col" ui-sref="tab.account-education()">
+            <h2><b ng-if="user.education.sch.shortname!='None'">{{user.education.sch.shortname}}</b><b ng-if="user.education.sch.shortname=='None'">Add School</b></h2>
+            <p ng-if="user.education.major!='None'">{{user.education.major}}</p><p ng-if="user.education.major=='None'">Add Major</p>
+          </div>
+          <div class="col item-text-wrap">
+            <a ng-if="canEdit" ng-click="openModal(4);">
+              <i class="ion-android-pin" style="color: black"></i>
+              <span ng-show="!user.location.name">Set a profile location</span>
+              <span ng-show="user.location.name">{{user.location.name}}</span>
+            </a>
+          </div>
+        </div>
+      </ion-item>
+
+      <div class="item item-divider" style="text-align: center;" ng-hide="user.showClassListings||(user.verify)">
+        Students & Parents
+        </div>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-hide="user.showClassListings||(user.verify)">
+            <div class="col" style="text-align: center;">
+              <p><a class="item assertive" href="#/tab/dash">
+                <i class="ion-ios-people-outline"></i> Browse Tutor Profiles
+              </a></p>
+              <p><a class="item assertive" href="#/tab/ask">
+                <i class="ion-paper-airplane"></i> Request A Tutor
+              </a></p>
+              <p>Free to use. No fees. No commission.</p>
+            </div>
+        </div>
+        <div class="item item-divider" style="text-align: center;" ng-hide="user.showClassListings">
+        Tutors & Coaches
+        </div>
+
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="(!user.showClassListings)&&(!user.verify)">
+            <div class="col" style="text-align: center;">
+              <p style="font-size:20px;"><b>Get Verified to List Your Lessons</b></p>
+              <p><a class="item" ng-click="checkIfProfileIsComplete()" style='background-color:#33cd5f;color:white;'>
+                <i class="ion-android-person-add"></i> Verify Me As Tutor
+              </a></p>
+            </div>
+        </div>
+
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="(!user.showClassListings)&&(!user.verify.complete)&&(user.verify.inprogress)">
+            <div class="col" style="text-align: center;">
+              <img ng-src="img/assets/verification-in-progress.png" style="width: 100%"/>
+              <p>Join our <a onclick="window.open('https://www.facebook.com/groups/223813274721041/', '_system', 'location=yes'); return false;"><b>Tutors Facebook Group</b></a> to stay updated</p>
+              <p ng-if="(user.face=='img/assets/placeholder.png')||(user.face=='img/assets/nologin.png')"><a class="item royal" ng-click="openModal(6)">
+                <i class="ion-android-person-add"></i> Upload Profile Picture
+              </a></p>
+              <p ng-if="(!user.writeup)||(user.writeup=='Short writeup about myself')"><a class="item royal" ng-click="openModal(1)">
+                <i class="ion-compose"></i> Do Personal Writeup
+              </a></p>
+              <p>We are more likely to approve profiles that have complete details</p>
+            </div>
+        </div>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="(!user.showClassListings&&user.verify.complete)">
+            <div class="col" style="text-align: center;">
+            <p><a class="item" ng-click="enableTeaching()" style='background-color:#33cd5f;color:white;'>
+                <i class="ion-android-person-add"></i> List Your First Lesson
+              </a></p>
+              <img ng-src="img/assets/verification-success.png" style="width: 100%"/>
+              <p>Join our <a onclick="window.open('https://www.facebook.com/groups/223813274721041/', '_system', 'location=yes'); return false;"><b>Tutors Facebook Group</b></a> to stay updated</p>
+            </div>
+        </div>
+      <ion-item class="item-item-divider" ng-if="user.showClassListings">
+        <a ng-click="setSchedule(); openModal(5);">
+          <span ng-if="!checkIfHaveSchedule(user.schedule)">
+            <i class="ion-clock" style="color: black"></i>
+            Indicate your lesson availability</span>
+          <span ng-if="checkIfHaveSchedule(user.schedule)">
+
+            <div class="row" id="scheduleheader">
+
+              <div class="col"><i class="ion-clock" style="color: black"></i></div>
+              <div class="col"><b>Mo</b></div>
+              <div class="col"><b>Tu</b></div>
+              <div class="col"><b>We</b></div>
+              <div class="col"><b>Th</b></div>
+              <div class="col"><b>Fr</b></div>
+              <div class="col"><b>Sa</b></div>
+              <div class="col"><b>Su</b></div>
+            </div>
+
+            <div class="row" id="schedulechild" ng-repeat="(key,value) in user.schedule">
+              <div class="col" id="bgtext"><img ng-src="{{getTimeOfDayPicture(value.name)}}" style="width:30px; height:30px;"></div>
+
+              <div class="col"><i ng-if='value.mon' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.tue' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.wed' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.thu' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.fri' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.sat' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+              <div class="col"><i ng-if='value.sun' class='icon ion-checkmark-round'
+              style='margin-left: 5px; color: green'></i></div>
+
+            </div>
+          </span>
+
+        </a>
+
+        <ion-option-button class="button-info"
+                           ng-click="openModal(5)">
+          Set
+        </ion-option-button>
+      </ion-item>
+
+    </ion-list>
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="person.writeup=='Short writeup about myself'">
+        <div class="col" style="text-align: left;">
+            <p>We notice you did not include a personal writeup. A writeup helps prospective students/parents to know about you better</b></p>
+        </div>
+    </div>
+  <ion-list show-delete="shouldShowDelete"
+          show-reorder="shouldShowReorder"
+          can-swipe="listCanSwipe" ng-if="user.showClassListings&&user.verify.complete">
+
+<div ng-if="canEdit">
+
+      <div class="item item-divider">
+        Teach Private Class
+        <a class="item-icon-right" ui-sref="tab.account-addnewskill()">
+           <i class="icon ion-plus-circled" style="color: grey"></i>
+        </a>
+      </div>
+      <ion-item type="item-text-wrap" ng-show="!user.skills">
+        Start teaching your <b>skills</b>
+      </ion-item>
+
+    <ion-item ng-repeat="(key,value) in user.skills" class="item-thumbnail-left" ng-click="openModal(3, key)">
+
+      <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png" />
+      <h2>{{key}}</h2>
+
+      <div class="item-button-right" ng-if="value.trial">
+       <button class="button button-outline button-balanced" ng-if="value.trial">
+
+              Free Trial
+            </button>
+      </div>
+      <p ng-repeat="(key,value) in value">
+        <span class="positive" ng-if="key!='trial'&&value>0">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="(key!='trial')&&(value>0)"> - {{key}}</span>
+      </p><br>
+
+      <div class="col col-22 col-bottom" style="color: grey; border-radius: 5px; text-align: center;">
+          <p><i class="icon ion-arrow-left-b" style="color: grey"></i><i class="icon ion-arrow-left-b" style="color: grey"></i><i class="icon ion-arrow-left-b" style="color: grey"> Edit</i></p>
+      </div>
+
+      <ion-option-button class="button-info" ng-click="openModal(3, key)">
+        Edit
+      </ion-option-button>
+      <ion-option-button class="button-assertive" ng-click="removeSkill(key)">
+        Delete
+      </ion-option-button>
+
+      <ion-delete-button class="ion-minus-circled"
+                         ng-click="skills.splice($index, 1)">
+      </ion-delete-button>
+      <ion-reorder-button class="ion-navicon"
+                          on-reorder="reorderItem(item, $fromIndex, $toIndex)">
+      </ion-reorder-button>
+
+    </ion-item>
+  </div>
+
+    </ion-list>
+
+      <div class="item item-divider" ng-if="jobs">
+      My Request
+
+      <div style="float:right;font-size:15px;" ui-sref="tab.account-requests()">
+        <u>View All Requests</u>
+
+         <i class = "icon ion-android-arrow-dropright">
+         </i>
+      </div>
+      </div>
+
+    <div class="list card" ng-if="jobs" style="text-align:center">
+
+              <div class="item item-avatar">
+                <img ng-src="{{job.requester.face}}" err-src="img/assets/nologin.png">
+                <a class="positive askprice"><b>{{defaultCountry.currency}}{{job.price|currency:"":0}}<span ng-if="job.meta.tuitionType">/hr</span></b></a>
+                <h2>{{job.requester.name}}</h2>
+                <p>{{job.time | date:"dd-MMM-yyyy ' at' h:mma"}}</p>
+            </div>
+            <div class="item item-body">
+              <a class="assertive" ng-if="job.meta">
+                {{job.meta.role}} requesting <b>{{job.categories}}</b>
+                <i class="icon ion-android-person" ng-if="job.meta.tuitionType=='Private'"></i>
+                <i class="icon ion-ios-people" ng-if="job.meta.tuitionType=='Group'"></i>
+                <b><span ng-if="job.meta.tuitionType">{{job.meta.tuitionType}}</span> {{job.meta.requestNature}}</b>
+                <br>
+                <span ng-if="job.duration&&job.frequency&&job.frequencyType">Lesson Details: <b>{{job.duration}} hrs/lesson <i class="ion-ios-alarm"></i><span ng-if="job.frequency!=1"> {{job.frequency}} lessons </span> {{job.frequencyType}}</b></span>
+
+              </a>
+              <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic" ng-click="showImage(job.task.pic)"/>
+              <p ng-if="job.meta">
+              {{job.task.writeup}}
+              </p>
+              <span ng-if="!job.meta">
+              {{job.task.writeup}}
+              </span>
+              <p>
+
+                <a class="assertive" ng-if="job.meta.tuitionGender&&(job.meta.tuitionGender!='None')">Prefers <i class="icon ion-woman" ng-if="job.meta.tuitionGender=='Female'"></i><i class="icon ion-man" ng-if="job.meta.tuitionGender=='Male'"></i> {{job.meta.tuitionGender}}</a><br>
+                <a class="royal" ng-if="job.location"><b> <i class="icon ion-ios-location"></i> {{job.location}}</b> </a>
+              </p>
+            </div>
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-hide="job.foundTutor&&job.likesCount<=0">
+              <p class="bar-calm" ng-hide="job.foundTutor">
+                <a ng-if="job.likesCount>0"><b>{{job.likesCount}} Tutor<span ng-if="(job.likesCount>1)">s</span> Answered</b></a>
+                <a ng-if="job.likesCount==0"><b>Open To Tutors</b></a>
+              </p>
+              <p class="bar-calm" ng-show="job.foundTutor">
+                <a ng-if="job.likesCount>0"><b>Found Tutor After {{job.likesCount}} Responses</b></a>
+              </p>
+            </div>
+
+            <div class="item tabs tabs-secondary tabs-icon-left" ng-if="authData.provider">
+                <a class="tab-item" ng-if="job.requester.id==authData.uid&&!job.foundTutor" ui-sref="tab.account-editRequest({requestId: job.key})">
+                  <i class="icon ion-edit"></i> Edit
+                </a>
+              <span ng-if="job.requester.id==authData.uid">
+                <a class="tab-item" ng-click="chooseTutorToClose(job)" ng-hide="job.foundTutor">
+                  <i class="icon ion-checkmark-circled"></i> I Found My Tutor
+                </a>
+              </span>
+              <a class="tab-item" ng-if="job.foundTutor">
+                <i class="icon ion-checkmark-circled"></i> Closed
+              </a>
+            </div>
+
+          </div>
+
+    <div class="item item-divider" ng-if="workshops">
+      Workshops Booked
+
+      <div style="float:right;font-size:15px;">
+        <u>View History</u>
+        <i class = "icon ion-android-arrow-dropright">
+        </i>
+      </div>
+    </div>
+    <div ng-if="workshops" style="height:13px;background-color:#f2f2f2"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px;background-color:white" ng-repeat="workshop in workshops" ui-sref="tab.account-workshop({workshopBookingId:workshop.key})">
+                        <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/carousel/lifestyle/guitar.jpg)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                    <div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+                  <p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+                        <p style="line-height:14px;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+    </div>
+
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: center;">
+          <p ng-if="user.tel.country==65">learnly.sg/tutor/{{user.alias}}</p>
+
+          <p><a class="item royal" ui-sref="tab.account-person({alias: authData.uid})">
+            <i class="ion-person"></i> View My Profile As Student
+          </a></p>
+          <p>
+            <a class="item royal" onclick="window.open('https://www.facebook.com/groups/223813274721041/', '_system', 'location=yes'); return false;">
+          <!--
+          <a class="item royal" onclick="window.open('fb://group?id=223813274721041', '_system'); return false;">
+          -->
+            <i class="ion-android-person-add"></i> Join Learnly Tutors Facebook Group
+          </a></p>
+        </div>
+    </div>
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+
+        <div class="col" style="text-align: left;">
+            <p>For students to find you, <b>login at least once a week</b> for your profile to <b>feature in the search results</b>.</p><p>When you have found a tutor/student, you can manage them through the<b> Inbox scheduler</b></p><p>To stop receiving student requests, <b>visit the Settings</b> to hide your profile from listings</p>
+        </div>
+    </div>
+  </span>
+
+  <span ng-if="authData.provider!='anonymous'&&user.alias&&user.isWorkshopHolder==true">
+    <ion-item class="item-remove-animate item-thumbnail-left" >
+      <img ng-click="openModal(6)" ng-if="user.face" ng-src="{{user.face}}" style="border-radius: 10px" err-src="img/assets/placeholder.png">
+      <img ng-click="openModal(6)" ng-if="!user.face" ng-src="img/assets/placeholder.png" style="border-radius: 10px">
+      <div class="row">
+        <div class="col col-60"><b class="item-text-wrap">{{holder.HolderName}}</b>
+          <p>{{holder.HolderViews}} views</p>
+        </div>
+      </div>
+    </ion-item>
+
+      <div class="item item-divider">
+        Background
+      </div>
+      <ion-item class="item-text-wrap">
+        <p class="item-input">
+        <textarea msd-elastic readonly name="brief" ng-model="holder.HolderDescription" autofocus required>
+        </textarea>
+        </p>
+        </ion-item>
+    <div class="item item-divider">
+      Listed Workshops
+    </div>
+    <div ng-if="results" style="height:13px;background-color:#f2f2f2"></div>
+    <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px" ng-repeat="workshop in results" ui-sref="tab.account-workshopHolder({workshopId:workshop.key, keyWord:workshop.keyToPass})">
+      <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+        <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+           ${{workshop.price}}
+        </div>
+      </div>
+      <div ng-style="{'background-image':'url(img/carousel/lifestyle/guitar.jpg)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+        <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+          ${{workshop.price}}
+        </div>
+      </div>
+      <div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+        <p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+        <p style="line-height:14px;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+          <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+        <br>
+        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+    </span>
+  </ion-content>
+</ion-view>

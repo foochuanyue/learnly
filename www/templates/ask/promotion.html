@@ -1,0 +1,208 @@
+<ion-view title="Promotion">
+    <ion-content>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+            <div class="col" style="text-align: center;">
+                <p>Students nearby can contact you for lessons</p>
+                <p>Please ensure your profile has lessons listed</p>
+            </div>
+        </div>
+        <div class="item item-divider" ng-if="user.skills">
+            I am a ... (please select)
+        </div>
+        <div class="button-bar" style="border: 1px solid #0c63ee;" ng-if="user.skills">
+            <ion-radio class= "col center" ng-model="job.role" ng-value="'Tutor'" name = "job-role">
+                Tutor
+            </ion-radio>
+            <ion-radio class= "col center" ng-model="job.role" ng-value="'Centre'" name = "job-role">
+                Centre
+            </ion-radio>
+        </div>
+
+        <div class="item item-divider" ng-if="user.skills&&job.role">
+                Choose a Subject
+        </div>
+        <div>
+        <li class="item-accordion" style="list-style-type:none" ng-if="(job.category)&&((user.skills))&&job.role">
+            <label class="item item-avatar item-button-right item-icon-right">
+              <img ng-src="{{getSkillPic(job.category)}}">
+              <h2>{{job.category}}</h2>
+              <button class="button button-small button-assertive" ng-click="job.category = null;" ng-if="job.category">
+                Reset
+              </button>
+           </label>
+        </li>
+
+        <div ng-repeat="(key,value) in user.skills" ng-if="(!job.category)&&((user.skills))&&job.role">
+                <ion-radio class="item-accordion" ng-model="job.category" ng-value="key" ng-click="resizeScroll()">
+                    <div class="item item-avatar">
+                        <img ng-src="{{getSkillPic(key)}}">
+                        <h2>{{key}}</h2>
+                    </div>
+                </ion-radio>
+        </div>
+        <div class="list" ng-show="job.category&&((user.skills))">
+            <div class="item item-divider">
+                Offering (please select)
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;">
+                <ion-radio class= "col center" ng-model="job.requestNature" ng-value="'Revision'" name = "job-nature" ng-click="resizeScroll()">
+                    <i class="icon ion-briefcase"></i>
+                    Revision
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.requestNature" ng-value="'Class'" name = "job-nature">
+                    <i class="icon ion-loop" ng-click="resizeScroll()"></i>
+                    Weekly Class
+                </ion-radio>
+            </div>
+            <div class="item item-divider" ng-if="job.requestNature">
+                Class Size
+            </div>
+            <div class="button-bar" style="border: 1px solid #0c63ee;" ng-if="job.requestNature">
+                <ion-radio class= "col center" ng-model="job.tuitionType" ng-value="'Private'" name = "tuition-type" ng-click="job.writeup = user.writeup" ng-click="resizeScroll()">
+                    <i class="icon ion-android-person"></i>
+                    Private
+                </ion-radio>
+                <ion-radio class= "col center" ng-model="job.tuitionType" ng-value="'Group'" name = "tuition-type" ng-click="job.writeup = user.writeup" ng-click="resizeScroll()">
+                    <i class="icon ion-ios-people"></i>
+                    Group
+                </ion-radio>
+            </div>
+
+            <div class="item item-divider item-button-right item-icon-right" ng-if="job.tuitionType">
+                    Upload a Picture (optional)
+                    <i class="icon assertive ion-close-circled" ng-show="job.pic" ng-click='job.pic=null'></i>
+                    <!--
+                    <a class="button button-icon icon ion-close-circled" ng-click='job.pic==null'></a>
+                -->
+            </div>
+            <span ng-if="job.tuitionType">
+            <div class="item item-image" style="width: auto" ng-show="job.pic">
+                <img ng-src="{{job.pic}}" style="border-radius: 10px">
+            </div>
+            <div class="item item-image" style="width: auto" ng-hide="job.pic">
+                <a class="button button-icon icon ion-ios-camera" ng-click='job.pic="img/gif/loading_shaking.gif"; showMediaSelector();'></a>
+            </div>
+            </span>
+            <div class="item item-divider" ng-if="job.tuitionType">
+                Writeup for Promotion
+              <div class="col" style="text-align: left;" >
+                  <p>Describe any running promotion or special offers</p>
+              </div>
+
+            </div>
+            <div class="list list-inset" ng-if="job.tuitionType">
+            <label class="item item-text-wrap item-input" >
+                <textarea msd-elastic name="brief" placeholder="I am ... " ng-model="job.writeup">
+                </textarea>
+                <span ng-if="job.writeup.length<=20">Your writeup is too short</span>
+            </label>
+            </div>
+
+            <div class="item item-divider" ng-if="job.writeup&&(job.writeup.length>20)">
+                Your <span>Offer Rate</span> ($<span ng-if="job.requestNature=='Class'">/hr</span>)
+            </div>
+            <!--
+            <label class = "addpaddingtoleft">
+                    Your $/hr <span ng-if="choice=='Request'">Budget</span><span ng-if="choice=='Offer'">Desired Rate</span>
+            </label>
+
+        -->
+            <div class="item item-body" ng-show="job.writeup&&(job.writeup.length>20)">
+                <input type="text" class="js-range-slider" />
+            </div>
+            <div class="item item-divider" ng-if="(job.writeup.length>20)">
+                Lesson Location
+            </div>
+
+            <label class="item item-input" ng-if="(job.writeup.length>20)">
+                <!--
+                <textarea placeholder="Location of Help Needed" ng-model="job.location"></textarea>
+                -->
+                <input type="text" placeholder="Location or Area" ng-model="job.location"/>
+            </label>
+        </div>
+
+        <button class="button button-block button-positive" ng-show="submitJobButtonClicked">
+            <div class="center-vertical-horizontal">
+              Please Wait 
+              <ion-spinner class="button-spinner"></ion-spinner>
+            </div>
+        </button>
+        <button class="button button-block button-positive" ng-click="submitJobButtonClicked = true; addJob(job,job.price,job.writeup,job.location,job.pic,'Offer',job.category);" ng-show="job.role&&job.category&&job.requestNature&&(job.writeup.length>20)&&job.location&&((user.skills))&&(job.pic!='img/gif/loading_flying.gif')&&!edittingMode&&!userLoading&&!submitJobButtonClicked">
+            Submit
+        </button>
+        <button class="button button-block button-positive" ng-click="updatePromotion(job);" ng-show="job.role&&job.category&&job.requestNature&&(job.writeup.length>20)&&job.location&&((user.skills))&&(job.pic!='img/gif/loading_flying.gif')&&edittingMode&&!userLoading">
+            Update
+        </button>
+       <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-hide="((user.skills==null))||(job.role&&job.category&&job.requestNature&&job.writeup&&job.location&&((user.skills))&&(job.pic!='img/gif/loading_shaking.gif'))">
+            <div class="col" style="text-align: center; color: #ef473a;">
+                <p><b>Your post is incomplete</b></p>
+                <p><b>Please fill out the required details</b></p>
+            </div>
+        </div>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="(user.skills)">
+            <div class="col" style="text-align: center;">
+                <p>Please ensure your tutor profile is filled out</p>
+                <p>You will receive a notification if parents and students contact you </p>
+            </div>
+        </div>
+        <div class="row" style="color: grey; background:#EEE; border-radius: 5px;" ng-if="(user.skills==null)">
+            <div class="col" style="text-align: center; color: #ef473a;">
+                <p><b>You don't have any lessons listed</b></p>
+                <p>Please go to Account > Add Skills</p>
+                            <a ng-click="closeModal(4)" href="#/tab/account">
+              <img ng-src="img/assets/sample-addskill.jpg" style="border-radius: 10px; max-width:100%;">
+          </a>
+                <p><a class="item assertive" ng-click="closeModal(4)" href="#/tab/account">
+                <i class="ion-location"></i> List Your First Lesson
+              </a></p>
+
+            </div>
+        </div>
+
+        <div class="item item-divider" style="text-align: center;" ng-if="job.writeup">
+        Post Preview
+        </div>
+        <div class="list card" style="color: grey; background:#EEE;" ng-if="job.writeup">
+          <div class="item item-avatar">
+            <img ng-src="{{user.face}}" err-src="img/assets/placeholder.png">
+            <a class="positive askprice"><b>{{defaultCountry.currency}}{{job.price|currency:"":0}}<span ng-if="job.tuitionType">/hr</span></b></a>
+            <h2>{{user.name}}</h2>
+            <p>Now</p>
+        </div>
+        <div class="item item-body" style="text-align: center;">
+          <a class="assertive">
+            {{job.role}} offering <b>{{job.category}}</b>
+            <i class="icon ion-android-person" ng-if="job.tuitionType=='Private'"></i>
+            <i class="icon ion-ios-people" ng-if="job.tuitionType=='Group'"></i>
+            <b><span ng-if="job.tuitionType">{{job.tuitionType}}</span> {{job.requestNature}}</b>
+          </a>
+          <img class="full-image" ng-src="{{job.pic}}" ng-if="job.pic"/>
+          <p>
+          {{job.writeup}}
+          </p>
+          <p>
+            <a class="royal" ng-if="job.location"><b> <i class="icon ion-ios-location"></i> {{job.location}}</b> </a>
+          </p>
+        </div>
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <p class="bar-calm">
+            <a><b>Open To Students</b></a>
+          </p>
+
+        </div>
+        <div class="item tabs tabs-secondary tabs-icon-left" >
+          <a class="tab-item">
+            <i class="icon ion-heart"></i> Follow
+          </a>
+          <a class="tab-item">
+            <i class="icon ion-ios-search-strong"></i> View
+          </a>
+          <a class="tab-item" >
+            <i class="icon ion-alert-circled"></i> Report
+          </a>
+        </div>
+    </div>
+
+    </ion-content>
+</ion-view>

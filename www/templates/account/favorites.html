@@ -1,0 +1,58 @@
+<ion-view view-title="Following Tutors" cache-view="true">
+
+  <ion-content class="has-header" style="background-color: #EEE">
+    <ion-slide-box style="padding-top: 140px;" show-pager="false" ng-if="!user.likes.person">
+      <ion-slide style="background-color: #EEE;">
+        <img ng-src="img/assets/nologin.png" height="140px" >
+        <h3>Follow Tutors You Like</h3>
+        <a href="#/tab/dash">
+        <button class="button button-balanced" style="width: 288px">
+          
+          Browse Tutors
+        </button>
+        </a>
+        <h5>Just hit <i class="icon assertive ion-heart"></i> to follow a tutor</h5>
+      </ion-slide>
+    </ion-slide-box>
+
+    <ion-list ng-if="user.likes.person">
+      <ion-item ng-repeat="coach in listFavorites | orderBy:'-time'" class="item-thumbnail-left">
+
+        <img ng-src="{{coach.face}}" err-src="img/assets/nologin.png" style="border-radius: 10px" ng-if="currentview=='tab.account-favorites'" ui-sref="tab.account-person({alias: coach.key})"/>
+        <img ng-src="{{coach.face}}" err-src="img/assets/nologin.png" style="border-radius: 10px" ng-if="currentview=='tab.dash-favorites'" ui-sref="tab.dash-person({alias: coach.key})"/>
+
+        <h2>{{abstract(coach.name,20)}}</h2>
+        <h3><i>@{{coach.alias}}</i></h3>
+
+        <div class="item-text-wrap">
+        <p>{{abstract(coach.writeup,160)}}</p>
+        </div>
+        <div class="item-button-right">
+
+           <button class="button button-small button-balanced" ng-if="currentview=='tab.account-favorites'" ui-sref="tab.account-person({alias: coach.key})">
+                  View Profile
+            </button> 
+          
+           <button class="button button-small button-balanced" ng-if="currentview=='tab.dash-favorites'" ui-sref="tab.dash-person({alias: coach.key})">
+                  View Profile
+            </button> 
+        </div>
+       <button class="button button-full" ng-click="removeBookmark(coach.key)">
+              <i class="ion-ios-trash assertive"> Stop Following </i>
+        </button> 
+        
+
+        <ion-option-button class="button-assertive" ng-click="removeBookmark(coach.key)">
+          Delete
+        </ion-option-button>
+
+        <ion-delete-button class="ion-minus-circled"
+                           ng-click="removeBookmark(coach.key)">
+        </ion-delete-button>
+
+      </ion-item>
+
+    </ion-list>
+  </ion-content>
+
+</ion-view>

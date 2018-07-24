@@ -1,0 +1,42 @@
+<div class='modal'>
+  <header class='bar bar-header bar-calm'>
+    <h1 class='title'>Spruce Your Profile</h1>
+    <div class='button button-clear' ng-if="user.face!='img/gif/loading_shaking.gif'" ng-click='updateName(user.name)'>
+      <span class='icon ion-close'></span>
+    </div>
+  </header>
+<ion-content has-header='true' padding='true' style='padding-top: 20%; background-color: #594443'>
+
+    <div class="list card">
+
+      <div class="ion-profile-picture" ng-click="showMediaSelector()">
+        <img id="profile-image" ng-if="user.face&&(user.face!='img/assets/placeholder.png')" ng-src="{{user.face}}" err-src="img/assets/nologinpicture.png">
+        <img id="profile-image" ng-if="user.face=='img/assets/placeholder.png'" ng-src="img/assets/nologinpicture.png">
+      </div>
+
+    <label class="item item-input">
+      <span class="input-label assertive">Display Name</span>
+      <input type="text" ng-model="user.name" ng-change="nameTouched()" required>
+    </label>
+<!--
+    <label class="item item-input">
+      <span class="input-label assertive">Alias</span>
+      <input type="text" ng-model="user.alias" required>
+    </label>    
+-->
+    </div>
+
+    <button class="button button-full button-positive" ng-if="user.face!='img/gif/loading_shaking.gif'" ng-click='updateName(user.name)'>
+      Looks Good
+    </button>
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: left;">
+            <p>A profile picture helps tutors and students relate to you better.</p>
+            <p>Here's an example:</p>
+             <img ng-src="img/assets/sample-writeup.jpg" style="border-radius: 10px; max-width:100%;">
+        </div>
+    </div>
+
+  </ion-content>
+
+</div>

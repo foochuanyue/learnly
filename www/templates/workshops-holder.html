@@ -1,0 +1,50 @@
+<ion-view view-title="Instructor">
+  <ion-content>
+  <div class="item item-thumbnail-left">
+      <img ng-if="holder.HolderCover" ng-src="{{holder.HolderCover}}" style="border-radius: 10px" ng-click="showImage(person.face)" err-src="img/assets/placeholder.png">
+      <img ng-if="!holder.HolderCover" ng-src="img/assets/placeholder.png" style="border-radius: 10px"/>
+      <div class="row">
+        <div>
+          <b class="item-text-wrap">{{holder.HolderName}}</b>
+          <p>{{holder.HolderViews}} views</p>        
+        </div>
+      </div>
+      </div>
+      <div style="background-color:#f2f2f2;height:20px;padding-left:20px;padding-top:3px;padding-bottom:23px;">
+      Description
+      </div>
+      <textarea readonly msd-elastic style="padding-left:20px;padding-right:20px;margin-top:10px;margin-bottom:10px;width:100%" ng-model="holder.HolderDescription">
+      </textarea>
+      <div class ="item item-divider">
+      Listed Classes
+      </div>
+      <div ng-if="results" style="height:13px;background-color:#f2f2f2;"></div>
+                <div style= "border-width:0px 13px 13px 13px;border-color:#f2f2f2;border-style:solid;height:123px;" ng-repeat="workshop in results" ui-sref="tab.workshops-individual({workshopId:workshop.workshopID, keyWord:workshop.keyToPass})">
+                        <div ng-style="{'background-image':'url({{workshop.cover}})'}" ng-if="workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                        <div ng-style="{'background-image':'url(img/assets/placeholder.png)'}" ng-if="!workshop.cover" style="height:110px;float:left;width:50%;background-size:cover;">
+                            <div style="text-align: center; color: white; background-color:#fbb03b; width:30%;margin-top:70px;height:25px;font-size:15px;padding-top:2px;font-weight:bold;">
+                                ${{workshop.price}}
+                            </div>
+                        </div>
+                   	<div style="float:right; width:48%;padding-left:1%;margin-right:1%; margin-top:4px; height:50px;">
+            			<p style="display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.provider.providerName}}</p>
+                        <p style="line-height:14px;font-size:12px;margin-top:-11px;display: -webkit-box !important; -webkit-line-clamp: 2   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;"><b>{{workshop.workshopTitle}}</b></p>
+                        <div class="dotdotdot" style="font-size:10px;line-height:12px;margin-top:-6px">{{workshop.workshopDescription}}</div>
+                        <br>
+                        <p style="line-height:11px;font-size:9px;margin-top:-15px;display: -webkit-box !important; -webkit-line-clamp: 1   !important; -webkit-box-orient: vertical !important;word-wrap:break-word; overflow:hidden;">{{workshop.location.name}}</p>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div class="row" ng-show="results==null">
+                    <div class="col col-22" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+            			<p>Our crack team is searching now... Patience!</p>
+                        <img ng-src="{{randomGif()}}" height="200px" style="border-radius: 10px;"/>
+
+                    </div>
+                </div>
+  </ion-content>
+</ion-view>

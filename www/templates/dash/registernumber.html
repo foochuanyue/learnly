@@ -1,0 +1,36 @@
+﻿<ion-view view-title="Let's Confirm Your Number">
+
+    <ion-content style='background-color: #594443'>
+
+        <div class="list card">
+          <div class="item item-divider">
+            <button class="button button-small" ng-model="button0" ng-class="(user.tel.country==65)?'button-positive':'button-stable'" ng-click="user.tel.country=65; inputUp(); button0.clicked=!button0.clicked;">
+              <img src="img/countries/Singapore.png" style="width: 30px"/> SG
+            </button>
+            <button class="button button-small" ng-model="button1" ng-class="(user.tel.country==60)?'button-positive':'button-stable'" ng-click="user.tel.country=60; inputUp(); button1.clicked=!button1.clicked;">
+              <img src="img/countries/Malaysia.png" style="width: 30px"/> MY
+            </button>
+            <button class="button button-small" ng-model="button2" ng-class="(user.tel.country==66)?'button-positive':'button-stable'" ng-click="user.tel.country=66; inputUp(); button2.clicked=!button2.clicked;">
+              <img src="img/countries/Thailand.png" style="width: 30px"/> TH
+            </button>
+
+          </div>
+            <label class="item item-input assertive">
+                <span class="input-label">Country Code</span>
+                <h3>+{{user.tel.country}}</h3>
+            </label>
+
+            <label class="item item-input assertive">
+                <span class="input-label">Phone Number</span>
+                <input type="tel" ng-model="user.tel.num" on-focus="inputUp()" autofocus required>
+            </label>
+
+        </div>
+
+        <button class="button button-full button-positive" ng-click='registernumber(user.tel.country, user.tel.num)'>
+            Request OTP SMS
+        </button>
+
+
+    </ion-content>
+</ion-view>

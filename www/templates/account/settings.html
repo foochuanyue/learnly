@@ -1,0 +1,60 @@
+<ion-view view-title="Settings" cache-view="true">
+<!--
+  <ion-nav-buttons side="right">
+    <button ng-show="authData" class="button button-positive button-clear no-animation" ng-click="logout()">
+      <i class="ion-power stable"> Logout</i>
+    </button>
+  </ion-nav-buttons>
+-->
+  <ion-content class="has-header" ng-show="user" style="background-color: #EEE;">
+    <div class="item item-divider" style="text-align: left;">
+    Refer Friends
+    </div>
+    <ion-list>
+      <ion-item class="item  item-thumbnail-left item-icon-right" ng-repeat="label in invites" type="item-text-wrap" ng-click="callFunction(label.action)" style="min-height: 0px; padding-left: 54px; padding-top: 12px;">
+
+          <img ng-src="{{label.icon}}" style="max-width: 32px; max-height: 32px; top: 5px;"></i>
+          {{label.name}}
+          <i class="icon ion-chevron-right icon-accessory"></i>
+
+      </ion-item>
+    </ion-list>
+    <div class="item item-divider" style="text-align: left;">
+    Learnly Account
+    </div>
+    <ion-list>
+      <ion-item class="item item-icon-left item-button-right" ng-repeat="label in labels" type="item-text-wrap" ng-click="callFunction(label.action)">
+
+          <i class="icon {{label.icon}}"></i>
+          {{label.name}}
+
+
+        <button class="button button-clear" ng-if="label.show">
+
+          <i class="icon ion-chevron-right icon-accessory"></i>
+
+        </button>
+
+
+      </ion-item>
+    </ion-list>
+    <div style="text-align: center;">
+      <br>
+      <a onclick="window.open('https://belearnly.com/pages/terms-conditions', '_system', 'location=yes'); return false;"><b>Terms of Use and Privacy Policy</b></a>
+      <p>© 2017 Learnly Pte Ltd. All rights reserved.</p>
+    </div>
+  </ion-content>
+
+  <ion-content class="has-header" ng-hide="authData">
+    <ion-slide-box style="padding-top: 140px;" show-pager="false">
+      <ion-slide>
+        <img ng-src="img/assets/nologin.png" height="140px" >
+        <h3>Sorry! Do We Know You?</h3>
+        <button class="button button-balanced" style="width: 288px" ng-click="logout()">
+          Sign In Now
+        </button>
+        <h5>To Create Your Learnly Profile</h5>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>

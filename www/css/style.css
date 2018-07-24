@@ -1,0 +1,676 @@
+/* Empty. Add your own CSS if you like
+.scroll-content {
+    background: url('../img/assets/loginbackground.jpg') no-repeat center fixed !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    background-size: cover !important;
+    margin: auto;
+    position: absolute !important;
+}
+*/
+
+* {
+    font-family:'weblysleekuiregular';
+}
+
+ h1, h2, h3, h4, h5 {
+    font-family:'weblysleekuibold';
+}
+
+#loginbackground {
+    background: url('../img/assets/loginbackground.jpg') no-repeat center fixed !important;
+    margin: auto;
+    position: absolute !important;
+}
+
+div.intro.carousel h1 {
+  padding-top: 62px;
+  padding-bottom: 30px;
+  color: #ffffff  !important;
+  font-size: 24px;
+  font-family: "San Francisco", "Roboto", "Segoe UI", sans-serif;
+  min-height: 130px;
+}
+
+.ion-scroll.wide-as-needed {
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+
+.button.button-icon.input-button {
+  position: relative;
+  left: 45%;
+  top: 1px;
+  color: #aaa;
+}
+
+.button.button-icon.ion-android-close {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 3.0em;
+  color: #000;
+}
+
+.card.list-inset {
+  margin: 5px 10px;
+}
+
+.item-input-inset {
+  padding-top: 5px !important;
+}
+
+.item-content {
+  padding-right: 5px !important;
+}
+
+.header.icon {
+  margin-left: 10%;
+}
+
+.icon.ion-ios-search.placeholder-icon {
+  color: black;
+}
+
+.col.col-30{
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  border-radius: 3px;
+  margin: 3px;
+  height: 90px;
+  box-shadow: 1px 1px 1px #eee;
+}
+
+#fakesearch {
+    margin-top:0.5%;
+    width:100%;
+    height:30px;
+    background:#EEE;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    color: black;
+    right: none !important;
+}
+
+body {
+  cursor: url('http://ionicframework.com/img/finger.png'), auto;
+}
+.slider {
+  height: 95%;
+}
+.slider-slide {
+  padding-top: 0px;
+  color: #000;
+  background-color: #fff;
+  text-align: center;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+}
+
+#logo {
+  margin: 10px 0px;
+}
+
+#list {
+  width: 170px;
+  margin: 30px auto;
+  font-size: 20px;
+}
+#list ol {
+  margin-top: 30px;
+}
+#list ol li {
+  text-align: left;
+  list-style: decimal;
+  margin: 10px 0px;
+}
+
+.button.ng-hide{
+  display:none;
+}
+
+textarea{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 30px;
+  overflow: hidden;
+  resize: none;
+  background-color: white;
+}
+
+/*Chat*/
+.button.button-grey {
+  border-color: #585858;
+  background-color: #585858;
+  color: #fff;
+}
+
+.button.button-grey:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.button.button-grey.active,
+.button.button-grey.activated {
+  border-color: #585858;
+  background-color: #686868;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button.button-grey.button-clear {
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+  color: #585858;
+}
+
+.button.button-grey.button-icon {
+  border-color: transparent;
+  background: none;
+}
+
+.button.button-grey.button-outline {
+  border-color: #585858;
+  background: transparent;
+  color: #585858;
+}
+
+.button.button-grey.button-outline.active,
+.button.button-grey.button-outline.activated {
+  background-color: #585858;
+  box-shadow: none;
+  color: #fff;
+}
+
+/*chat style
+
+.scroll {
+  padding: 0px 0px 50px !important;
+}
+
+.messages {
+
+  justify-content: flex-end;
+
+  align-items: flex-end;
+}
+
+
+
+.messages {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-box-align: center !important;
+  -moz-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  margin-bottom: 20px !important;
+}
+*/
+.messages {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+  -webkit-align-content: center !important;
+  -ms-flex-line-pack: center !important;
+  align-content: center !important;
+  -webkit-box-align: center !important;
+  -moz-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+
+.messages .message {
+  -webkit-box-flex: 1 !important;
+  -moz-box-flex: 1 !important;
+  -webkit-flex: 1 1 auto !important;
+  -ms-flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
+  padding: 5px !important;
+  -webkit-transition: all 250ms ease-in-out !important;
+  transition: all 250ms ease-in-out !important;
+  overflow: hidden !important;
+  text-align: right !important;
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  -moz-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+.message.message textarea {
+  background-color:#007AFF !important;
+}
+
+.messages.other textarea{
+  background-color:#C7C7CC !important;
+}
+
+.messages.other .message {
+  -webkit-transform: translate3d(0, 0, 0) !important;
+  -moz-transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
+  text-align: left !important;
+  margin-left: 10px;
+}
+.messages.other .message.slide-right {
+  -webkit-transform: translate3d(120px, 0, 0) !important;
+  -moz-transform: translate3d(120px, 0, 0) !important;
+  transform: translate3d(120px, 0, 0) !important;
+}
+.messages.other span {
+  color: black !important;
+  background-color: #C7C7CC !important;
+
+}
+
+.message span {
+  background: #007AFF !important;
+  display: inline-block !important;
+  color: white !important;
+  padding: 6px !important;
+  border-radius: 10px !important;
+  text-align: left !important;
+  max-width: 240px !important;
+
+}
+
+.user-messages-top-icon {
+  font-size: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+  right: 5px;
+}
+
+.msg-header-username {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+}
+
+img.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  bottom: 10px;
+}
+
+img.profile-pic.left {
+  left: 10px;
+}
+
+img.profile-pic.right {
+  right: 10px;
+}
+
+/* Map */
+/*ask/request.html*/
+#map {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+/*account/setlocation.html*/
+#map2 {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+/*searchctrl search-location.html*/
+#map3 {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+/*map.html*/
+#map4 {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+/*account/request.html*/
+#map6 {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+/*workshop search workshop-location.html*/
+#map7 {
+    width: 100%;
+    height: 200px;
+    background-color: grey;
+}
+
+/* Schedule Calendar */
+
+.pure-table{border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb}
+.pure-table caption{color:#000;font:italic 85%/1 arial,sans-serif;padding:1em 0;text-align:center}
+.pure-table td,.pure-table th{border-left:1px solid #cbcbcb;border-width:0 0 0 1px;font-size:inherit;margin:0;overflow:visible;padding:.5em .5em;padding-left: .1em;}.pure-table td:first-child,.pure-table th:first-child{border-left-width:0}.pure-table thead{background-color:#e0e0e0;color:#000;text-align:left;vertical-align:bottom}.pure-table td{background-color:transparent}.pure-table-odd td{background-color:#f2f2f2}.pure-table-striped tr:nth-child(2n-1) td{background-color:#f2f2f2}
+.pure-table-bordered td{border-bottom:1px solid #cbcbcb}.pure-table-bordered tbody>tr:last-child>td{border-bottom-width:0}
+.pure-table-horizontal td,.pure-table-horizontal th{border-width:0 0 1px;border-bottom:1px solid #cbcbcb}.pure-table-horizontal tbody>tr:last-child>td{border-bottom-width:0}
+
+div.timeOfDay {
+    /*line-height: 20px;  just to give it a height */
+    display: block;
+    color: #000;
+    z-index:0;
+}
+
+div.timeOfDayContents {
+    position: relative;
+    top: -20px;
+    z-index:1;
+}
+
+#scheduleheader {
+  background-color:#e0e0e0;color:#000;text-align:left;vertical-align:bottom;
+  border-collapse:collapse;border-spacing:0;empty-cells:show;border:1px solid #cbcbcb;
+  border-width:0 0 1px;border-bottom:1px solid #cbcbcb;
+}
+
+#schedulechild{
+  border-width:0 0 1px;border-bottom:1px solid #cbcbcb;
+}
+
+#bgtext {
+  position: relative;
+  text-align: center;
+  color: #bbb;
+  z-index: -10;
+}
+
+/* ngAnimate */
+.form-input-error {
+  line-height: 20px;
+  opacity: 1;
+  padding: 10px;
+  border: 1px solid black;
+  background: white;
+  position: absolute;
+  color: red;
+  -webkit-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+}
+.form-input-error.ng-active {
+  opacity: 1;
+}
+.form-input-error.ng-inactive {
+  opacity: 0;
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
+}
+.form-input-error > .message {
+  background: white;
+  padding: 10px;
+}
+.form-input-error > .message.ng-enter,
+.form-input-error > .message.ng-leave {
+  -webkit-transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition: all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+.form-input-error > .message.ng-enter,
+.form-input-error > .message.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.form-input-error > .message.ng-leave,
+.form-input-error > .message.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+/*ion radio fix */
+.item-radio input:checked + .radio-content .item-content {
+  /* style the item content when its checked */
+  background: #f7f7f7;
+
+}
+
+.item-radio input:checked + .radio-content .radio-icon {
+  /* show the checkmark icon when its checked */
+  visibility: visible;
+
+}
+
+/* collapsible list accordion */
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+/* collapsible list radio accordion */
+.list .item.item-radio.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: 0.09s all linear;
+}
+
+.list .item.item-radio.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-radio.item-accordion.ng-hide-add,
+.list .item.item-radio.item-accordion.ng-hide-remove {
+  display: block !important;
+}
+
+
+/* subject box */
+#subjectboxcontainer {
+  position:relative;
+  height: 100%;
+  .scroll {
+    height:100%;
+  }
+
+  .item-divider {
+    border:0px;
+    background-color:#FFF;
+  }
+
+  .slider {
+    height: 100%;
+    z-index: 150;
+  }
+}
+
+.ion-slide {
+  background-color: #0a9ec7;
+}
+.center {
+  text-align:center;
+}
+.subjectActive {
+  color: #fff;
+  background-color:#0c63ee;
+  font-weight: bold;
+}
+.workshopActive {
+  color: #11c1f3;
+  background-color:#11c1f3;
+  margin-left:12%;
+  margin-right:12%;
+}
+
+.buttonActive{
+  color: black;
+  background-color:#e8e5e5;
+}
+
+/* Profile pic */
+.ion-profile-picture{
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+  margin: 0.5rem auto 1rem auto;
+  background-color: #F8F8F8;
+  text-align: center;
+  color: #ccc;
+  position: relative;
+  background-position: center center;
+  background-size: auto 100%;
+}
+
+#profile-image {
+  display: block;
+  border-radius: 100px;
+  border: 1px solid #fff;
+  width: 10rem;
+  height: 10rem;
+  margin: 30px auto 0;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+}
+
+/* Rating stars */
+.ionic_ratings .icon {
+    font-size: 70px;
+}
+
+
+/* Full Screen Pictures */
+.transparent {
+  background: transparent !important;
+}
+.image-modal {
+  width: 100% !important;
+  height: 100%;
+  top: 0 !important;
+  left: 0 !important;
+}
+.fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+/* Fix modal backdrop for smaller devices */
+@media (max-width: 679px) {
+  .active .modal-backdrop-bg {
+    opacity: .5;
+  }
+  .modal-backdrop-bg {
+    -webkit-transition: opacity 300ms ease-in-out;
+    transition: opacity 300ms ease-in-out;
+    background-color: #000;
+    opacity: 0;
+  }
+}
+
+.addtopspace{
+  margin-top: 10px;
+}
+
+.askprice{
+  float:right;
+  margin-top: 10px;
+  margin-right: 30px;
+  font-size:30px;
+}
+
+label.addpaddingtoleft{
+  padding-left:  10px;
+}
+
+
+textarea[readonly] {
+  background-color:white !important;
+}
+
+.verifiedbutton{
+  width: 90px;
+  text-align:center;
+  color:#33cd5f;;
+}
+
+.levelstaught{
+  margin-left:90px;
+}
+
+.freetrialbutton{
+  width:100%;
+  padding-top:5px;
+  margin-top: 5px;
+  height:30px;
+  font-size:13px;
+}
+
+.ratingsquare{
+  height:90px;
+}
+
+.searchback{
+  font-size:30px;
+}
+
+.filterbutton{
+  width:20%;
+  margin-top:10px;
+  margin-left:2.5%;
+  margin-right:2.5%;
+  height:10px;
+}
+
+.searchcover{
+  height:80px;
+}
+
+.addtextshadow{
+  text-shadow: 1px 1px #111;
+}
+
+.dotdotdot{
+      display: -webkit-box !important;
+  -webkit-line-clamp: 3   !important;
+  -webkit-box-orient: vertical !important;
+  word-wrap:break-word;
+  overflow:hidden;
+}
+
+.paymentsinputs {
+background: red;
+color: white;
+font-style: italic;
+font-weight: bold;
+padding-left: 10px;
+}
+
+.center-vertical-horizontal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button-spinner {
+  display: flex;
+  stroke: yellow;
+  fill: white;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--
+    KEEP CSP PORTION FOR ANDROID BUILD - Impacts Network , COMMENT OUT FOR IOS - Impacts Facebook SSO
+  -->
+<!--
+  <meta http-equiv="Content-Security-Policy"
+  content="default-src self http://localhost:8100/ https://learnlybe.firebaseio.com/ https://js.stripe.com/v2/ https://*.stripe.com/ https://api.stripe.com file: https://fonts.gstatic.com;
+
+  connect-src self file: http://localhost:8100/ https://auth.firebase.com https://learnly-uploads.s3.amazonaws.com/ http://sign.belearnly.com/ http://image.belearnly.com/ wss://*.firebaseio.com/ ws://localhost:35729/ http://*.pushwoosh.com/ https://*.pushwoosh.com/ http://ec2-54-169-215-80.ap-southeast-1.compute.amazonaws.com/ https://pay1.learnly.sg/ https://js.stripe.com/v2/ https://*.stripe.com/ https://api.stripe.com;
+
+  img-src self data: blob: filesystem: file: http://localhost:8100/ https://learnly.sg/ https://learnlybe.firebaseio.com/ https://learnly-uploads.s3.amazonaws.com/  http://image.belearnly.com/ https://d124hzkl5r8ch8.cloudfront.net/ https://maps.gstatic.com/ https://scontent.xx.fbcdn.net/ https://fbcdn-profile-a.akamaihd.net/ https://*.akamaihd.net/ https://csi.gstatic.com/ https://*.googleapis.com/ http://graph.facebook.com/ http://ionicframework.com/ http://ec2-54-169-215-80.ap-southeast-1.compute.amazonaws.com/ https://pay1.learnly.sg/ https://js.stripe.com/v2/ https://*.stripe.com/ https://api.stripe.com https://maps.google.com/;
+
+  frame-src self https://*.firebaseio.com/ https://js.stripe.com/v2/ https://*.stripe.com// https://api.stripe.com;
+
+  style-src self http://localhost:8100/ 'unsafe-inline' file: https://fonts.googleapis.com/;
+
+  script-src self file: http://localhost:35729/ https://learnlybe.firebaseio.com/ https://*.firebaseio.com/ http://*.pushwoosh.com/ https://*.pushwoosh.com/ https://maps.google.com/ https://*.googleapis.com/ https://maps.googleapis.com/ https://js.stripe.com/v2/ https://*.stripe.com/ https://api.stripe.com">
+-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!--fonts-->
+    <link rel="stylesheet" href="fonts/weblysleek_ui/Weblysleek.css">
+    <link rel="stylesheet" href="fonts/OstrichSans/OstrichSans.css">
+    <link rel="stylesheet" href="fonts/Avenir/Avenir.css">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ng-cordova.min.js"></script>
+    <script src="lib/ionic-native/ionic.native.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+
+    <script src="cordova.js"></script>
+
+    <!-- firebase and angularfire js -->
+    <script src="lib/firebase/firebase.js"></script>
+    <script src="lib/angularfire/angularfire.min.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/PushwooshAndroid.js"></script>
+    <script src="js/PushwooshiOS.js"></script>
+    <script src="lib/ionic-ratings/dist/ionic-ratings.min.js"></script>
+
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/moment/angular-moment.min.js"></script>
+
+    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCfsYFfAruXsS0EPvBqn8kZkvdtM2Fy0NI&libraries=geometry"></script>
+
+    <script src="lib/angular-elastic/elastic.js"></script>
+
+    <!--stripe-->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="js/angular-payments.js"></script>
+
+
+    <!--date and time picker-->
+    <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+    <script src="lib/ionic-timepicker/dist/ionic-timepicker.bundle.min.js"></script>
+
+    <!--jquery-->
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+
+    <!--slider-->
+    <link rel="stylesheet" href="lib/ion.rangeSlider/css/normalize.css"/>
+    <link rel="stylesheet" href="lib/ion.rangeSlider/css/ion.rangeSlider.css"/>
+    <link rel="stylesheet" href="lib/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" />
+    <script src="lib/ion.rangeSlider/js/ion.rangeSlider.min.js"/></script>
+
+    <!--GeoFire-->
+    <script src="lib/rsvp/rsvp.min.js"></script>
+    <script src="lib/angularfire/angularfire.min.js"></script>
+    <script src="lib/geofire/dist/geofire.min.js"></script>
+    <script src="lib/AngularGeoFire/dist/angularGeoFire.min.js"></script>
+
+    <!--GeoHash-->
+    <script src="lib/angular-geohash/dist/angular-geohash.min.js"></script>
+
+  </head>
+  <body ng-app="learnly">
+    <div id="fb-root"></div><script src="js/facebookConnectPlugin.js"></script>
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-calm">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view class="slide-left-right"></ion-nav-view>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<ion-view view-title="Spruce Your Profile">
+  <ion-content style='background-color: #594443'>
+    <div class="list card">
+
+      <div class="ion-profile-picture" ng-click="showMediaSelector()">
+        <img id="profile-image" ng-src="{{user.face}}">
+      </div>
+
+    <label class="item item-input">
+      <span class="input-label assertive">Display Name</span>
+      <input type="text" ng-model="user.name" required>
+    </label>
+    <label class="item item-input">
+      <span class="input-label assertive">Email</span>
+      <input type="email" ng-model="user.email" required>
+    </label>
+    <label class="item item-input">
+      <span class="input-label assertive">Learnly Username</span>
+      <input type="text" ng-model="user.alias" required>
+    </label>    
+    <div class="item item-divider"><h4>Let others search for you with your unique username</h4></div>
+
+    </div>
+
+    <button class="button button-full button-positive" ng-click='saveUser(user.name, user.email, user.alias)'>
+      Looks Good
+    </button>
+    <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: left;">
+            <p>A profile picture helps tutors and students relate to you better.</p>
+            <p>Here's an example:</p>
+             <img ng-src="img/assets/sample-writeup.jpg" style="border-radius: 10px; max-width:100%;">
+        </div>
+    </div>
+    
+  </ion-content>
+</ion-view>

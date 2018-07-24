@@ -1,0 +1,337 @@
+<ion-view view-title="{{'@'+person.alias}}">
+  <ion-nav-title>
+     {{'@'+person.alias}}
+  </ion-nav-title>
+  <ion-nav-buttons side="right">
+
+    <button class="button button-positive button-clear no-animation"
+            ng-click="toggleBookmark()" ng-show="person.skills">
+      <!--
+      <i class="icon ion-ios-star energized" ng-show="bookmarkedPerson"></i>
+      <i class="icon ion-ios-star-outline stable" ng-hide="bookmarkedPerson"></i>
+    -->
+    </button>
+    <button class="button button-positive button-clear no-animation"
+            ng-click="shareWithFriend(personUid,person.name,person.alias,person.face)" ng-show="person.skills">
+
+      <i class="icon ion-share" style="color: white"></i>
+    </button>
+
+  </ion-nav-buttons>
+
+  <ion-content overflow-scroll="false">
+    <div class="item item-thumbnail-left" ng-if="preventBooking">
+      <img ng-if="person.face!='img/assets/placeholder.png'" ng-src="{{person.face}}" style="border-radius: 10px" ng-click="showImage(person.face)" err-src="img/assets/nologin.png">
+      <img ng-if="person.face=='img/assets/placeholder.png'" ng-src="img/assets/nologin.png" style="border-radius: 10px" ng-click="showImage('img/assets/nologin.png')">
+      <div class="row">
+        <div class="col col-60">
+          <b class="item-text-wrap">{{person.name}}</b>
+          <p>{{person.viewCount}} views</p>
+          <p style="color: green;">
+            <b am-time-ago="person.location.time"></b>
+          </p>
+        </div>
+        <a style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+          <!--
+          <p ng-if="person.ratingCount>0">{{person.ratingCount}} Reviews</p><p ng-if="person.ratingCount==0">Not Reviewed</p>
+        -->
+        </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="item item-thumbnail-left" ng-if="!preventBooking">
+      <!--
+      <img ng-if="person.face" ng-src="{{person.face}}" style="border-radius: 10px" ng-click="showImage(person.face)" err-src="img/assets/placeholder.png">
+      <img ng-if="!person.face" ng-src="img/assets/placeholder.png" style="border-radius: 10px"/>
+    -->
+      <img ng-if="person.face&&(person.face!='img/assets/placeholder.png')" ng-src="{{person.face}}" style="border-radius: 10px" ng-click="showImage(person.face)" err-src="img/assets/nologin.png">
+      <img ng-if="(person.face=='img/assets/placeholder.png')" ng-src="img/assets/nologin.png" style="border-radius: 10px" ng-click="showImage('img/assets/nologin.png')">
+      <img ng-if="!person.face" ng-src="img/assets/nologin.png" style="border-radius: 10px" ng-click="showImage('img/assets/nologin.png')">
+      <div class="row">
+        <div class="col col-60"><b class="item-text-wrap">{{person.name}}</b>
+          <p>{{person.viewCount}} views</p>
+           <p style="color: green;">
+              <b am-time-ago="person.location.time"></b>
+            </p>
+        </div>
+        <a ng-if="currentview=='tab.dash-person'" ui-sref="tab.dash-person-review({coach: personUid})" style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+        </div>
+        </a>
+        <a ng-if="currentview=='tab.ask-person'" ui-sref="tab.ask-person-review({coach: personUid})" style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+        </div>
+        </a>
+        <a ng-if="currentview=='tab.chat-person'" ui-sref="tab.chat-person-review({coach: personUid})" style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+        </div>
+        </a>
+        <a ng-if="currentview!='tab.dash-person'&&currentview!='tab.ask-person'&&currentview!='tab.chat-person'&&currentview!='tab.account-person'" ui-sref="review({coach: personUid})" style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+        </div>
+        </a>
+        <a ng-if="currentview=='tab.account-person'" ui-sref="tab.account-person-review({coach: personUid})" style="text-decoration: none">
+        <div class="col col-12" style="color: grey; background:#EEE; border-radius: 5px; text-align: center;">
+          <img ng-src="img/assets/rank.png" height="30px" ng-repeat="i in makeArrayOfSize(person.rating)"><img ng-src="img/assets/rank-grey.png" height="30px" ng-repeat="i in makeArrayOfSize(5-person.rating)">
+          <p>{{person.followers}} follower<span ng-if="person.followers>1">s</span></p>
+        </div>
+        </a>
+
+      </div>
+    </div>
+
+
+
+    <ion-list>
+      <div class="item item-divider">
+        Joined {{person.memberSince | date:'MMM yyyy'}}
+
+        <div class="item-button-right">
+
+        <button class="button button-dark" ng-if="!person.verify">
+          Not Verified
+        </button>
+
+      <!--
+        <button class="button button-dark" ng-if="!person.verify">
+          Not Verified
+        </button>
+        -->
+        <button class="button button-energized" ng-if="person.verify.inprogress&&(!person.verify.complete)">
+                <i class="icon ion-loop"> Pending Check</i>
+        </button>
+        <button class="button button-balanced" ng-if="person.verify.complete">
+                <i class="icon ion-checkmark-circled"> Verified Tutor</i>
+
+        </button>
+        </div>
+
+
+      </div>
+    	<ion-item class="item-text-wrap" ng-if="(person.writeup!='Short writeup about myself')&&(person.writeup.length>16)">
+    		<p class="item-input">
+        <textarea id="writeup" msd-elastic readonly name="brief" ng-model="filteredWriteup">
+        </textarea>
+        <div id="textareaCover" style="position:absolute;z-index:99;width:100%;"></div>
+        </p>
+    	</ion-item>
+
+      <ion-item class="item-thumbnail-left" style="min-height:50px; padding-left:70px;">
+      <img ng-src="{{person.education.sch.pic}}" style="width:50px; height:50px;" err-src="img/assets/placeholder.png"/>
+
+        <div class="row">
+          <div class="col col-50">
+            <h2><b>{{person.education.sch.shortname}}</b></h2>
+            <p class="item-text-wrap">{{person.education.major}}</p>
+          </div>
+          <div class="col col-50">
+              <i class="ion-android-pin" style="color: black"></i>
+              <span class="item-text-wrap" ng-show="!person.location.name">No teaching location specified</span>
+              <span class="item-text-wrap" ng-show="person.location.name">{{person.location.name}}</span>
+          </div>
+        </div>
+
+      </ion-item>
+      <ion-item class="item-item-divider" ng-if="checkIfHaveSchedule(person.schedule)" style="padding: 0px">
+          <span ng-show="person.schedule">
+          <div class="row" id="scheduleheader">
+
+            <div class="col"><i class="ion-clock" style="color: black"></i></div>
+            <div class="col"><b>Mo</b></div>
+            <div class="col"><b>Tu</b></div>
+            <div class="col"><b>We</b></div>
+            <div class="col"><b>Th</b></div>
+            <div class="col"><b>Fr</b></div>
+            <div class="col"><b>Sa</b></div>
+            <div class="col"><b>Su</b></div>
+          </div>
+
+          <div class="row" id="schedulechild" ng-repeat="(key,value) in person.schedule" style="padding: 0px">
+            <div class="col" id="bgtext"><img ng-src="{{getTimeOfDayPicture(value.name)}}" style="width:30px; height:30px;"></div>
+            <div class="col"><i ng-if='value.mon' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.tue' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.wed' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.thu' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.fri' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.sat' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+            <div class="col"><i ng-if='value.sun' class='icon ion-checkmark-round'
+            style='margin-left: 5px; color: green'></i></div>
+
+          </div>
+          </span>
+      </ion-item>
+
+    </ion-list>
+          <button class="button button-full button-dark" ng-click="toggleBookmark()" ng-show="person.skills">
+            <span ng-hide="bookmarkedPerson"><i class="icon ion-heart"></i> Follow This Tutor</span>
+            <span ng-show="bookmarkedPerson"><i class="icon assertive ion-heart"></i> Following</span>
+          </button>
+	<div class="list card">
+      <div class="item item-divider" ng-show="person.skills">Private Lesson</div>
+      <div class="item item-body" ng-show="!person.skills" style="text-align:center">
+          {{person.name}} is a <b>student or parent</b> looking around
+          <p>
+          <img ng-src="img/assets/emptyspeech.png" style="width:20%;" />
+          </p>
+      </div>
+      <div class="item item-body" ng-repeat="(key,value) in person.skills" style="padding: 0px;">
+
+        <a class="item item-avatar item-button-right" ng-if="currentview=='person'&&!preventBooking" ui-sref="booking({coach: personUid, lesson: key})" ng-if="!preventBooking" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-outline button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            Ask Me
+          </button>
+        </a>
+        <a class="item item-avatar item-button-right" ng-if="currentview=='tab.dash-person'&&!preventBooking" ui-sref="tab.dash-person-booking({coach: personUid, lesson: key})" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            Ask Me
+          </button>
+        </a>
+        <a class="item item-avatar item-button-right" ng-if="currentview=='tab.ask-person'&&!preventBooking" ui-sref="tab.ask-person-booking({coach: personUid, lesson: key})" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            Ask Me
+          </button>
+        </a>
+        <a class="item item-avatar item-button-right" ng-if="currentview=='tab.chat-person'&&!preventBooking" ui-sref="tab.chat-person-booking({coach: personUid, lesson: key})" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-outline button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            Ask Me
+          </button>
+        </a>
+        <a class="item item-avatar item-button-right" ng-if="currentview=='tab.account-person'&&!preventBooking" ui-sref="tab.account-person-booking({coach: personUid, lesson: key})" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-outline button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            Ask Me
+          </button>
+        </a>
+        <!-- Prevent Booking if it's user -->
+
+        <a class="item item-avatar item-button-right" ng-if="preventBooking" ng-show="authData.provider!='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive" ng-if="key!='trial'&&key!='verified'">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span ng-if="key!='trial'&&key!='verified'"> - {{key}}</span>
+          </p>
+          <button class="button button-outline button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-assertive" ng-click="showAlert('No Booking', preventBookingMessage)">
+            <i class="icon ion-lock-combination"></i>
+          </button>
+
+        </a>
+
+        <!-- Prevent Booking if anonymous-->
+        <a class="item item-thumbnail-left item-button-right" ng-click="openModal(2)" ng-if="authData.provider=='anonymous'">
+          <img ng-src="{{getSkillPic(key)}}" err-src="img/assets/placeholder.png"/>
+          {{key}}<br>
+          <p></p>
+          <p ng-repeat="(key,value) in value" style="white-space: nowrap;">
+            <span class="positive">{{defaultCountry.currency}}{{value|currency:"":0}}/hr</span><span> - {{key}}</span>
+          </p>
+          <button class="button button-outline button-balanced" style="margin-right:80px" ng-if="value.trial">
+              Free Trial
+          </button>
+          <button class="button button-positive">
+            <i class="icon ion-chevron-right"></i>
+          </button>
+        </a>
+
+      </div>
+<!--
+      <div class="item item-divider" ng-show="person.groups">Group Lesson</div>
+      <div class="item item-body" ng-show="!person.groups">
+          None <b>available</b>
+      </div>
+-->
+
+  </div>
+
+      <div class="item item-divider">
+      Get Free Tutor Matching
+      </div>
+      <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+          <div class="col" style="text-align: center;">
+            <p>Don't like scrolling? Let tutors contact you instead</p>
+            <p><a class="item assertive" href="#/tab/ask">
+              <i class="ion-paper-airplane"></i> Request A Tutor
+            </a></p>
+          <div ng-style="{'background-image':'url(img/referralbanner2.png)'}" ng-click="shareWithFriend()" style="background-size:cover;background-position:-25px center;height:50px">
+                        <div style="width:30%;display:inline-block;line-height:10px;margin-top:10px;text-align:left;padding-left:10px;">
+                          <p style="font-family:OstrichSansBlack;color:#318C9F;font-size:10px;margin-left:">
+                            Referral Code
+                          </p>
+                          <p style="font-family:AvenirMedium;color:white;font-size:15px">
+                            {{user.alias}}
+                          </p>
+                        </div>
+                        <div style="display:inline-block;float:right;font-family:OstrichSansBlack;font-size:15px;width:70%;word-wrap:break-word;overflow:auto;text-align:left;margin-top:5px;color:white;padding-right:10px;padding-left:30px;">
+                            Earn rewards when you invite students with your invite code
+                        </div>
+                      </div>
+
+      </div>
+
+  </ion-content>
+</ion-view>

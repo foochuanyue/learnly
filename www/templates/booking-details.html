@@ -1,0 +1,139 @@
+<ion-view view-title="Details">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-clear no-animation" ng-click="deleteclass()" ng-hide="class.confirmed">
+    <i style="color: white"> Delete</i>
+    </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+
+        <ion-item class="item" type="item-text-wrap" ng-show="orderType=='private'">
+        <div class="list card">
+
+          <div class="item item-avatar">
+            <img ng-if="person.face" ng-src="{{person.face}}">
+            <img ng-if="!person.face" ng-src="img/assets/placeholder.png">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+          </div>
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic">
+    
+            <p>
+              <button class = "button button-calm" ng-model=pickeddate >
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-balanced" ng-model=pickedtime>
+              {{pickeddate | date:'shortTime'}}
+              </button>
+            </p>
+
+            <p>
+              <div>
+              <h2 class="graybackground"><b>{{class.rate}}$/hr</b></h2>
+              </div>
+            </p>
+
+            <p>
+              <div>
+              <h2 class="graybackground"><b>{{class.duration}} hrs</b></h2>
+              </div>
+            </p>
+
+            <p>
+              <h2 class="graybackground"><b>{{class.paymentMethod}} Payments</b></h2>
+            </p>
+
+          </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" ng-show="class.confirmed && currentTime<=class.bookingtime">
+              <i class="icon ion-happy-outline"></i> Confirmed
+            </a>
+             <a class="tab-item" ng-click="confirmOrder(order.requesterid)" ng-show="!class.confirmed&&(authData.uid!=order.requesterid)&&((order.paymentEnabled != true) || (order.accepted==true))&&currentTime<=class.bookingtime">
+              <i class="icon positive ion-thumbsup"></i> Accept
+            </a>
+
+            <p align="center" ng-if="currentTime>class.bookingtime&&((authData.uid!=order.requesterid)||class.confirmed)"> Expired</p>
+
+            <a class="tab-item" ng-click="deleteclass()" ng-show="!class.confirmed&&(authData.uid===order.requesterid)&&currentTime<class.bookingtime">
+              <i class="icon ion-thumbsup"></i> Delete
+            </a>       
+
+            <a class="tab-item" ng-click="deleteclass()" ng-show="!class.confirmed&&(authData.uid===order.requesterid)&&currentTime>class.bookingtime">
+              <i class="icon ion-thumbsup"></i> Delete Expired Listing
+            </a> 
+
+          </div>
+        </div>
+
+      </ion-item> 
+
+      <ion-item class="item" type="item-text-wrap" ng-show="orderType=='gigs'">
+        <div class="list card">
+
+          <div class="item item-avatar">
+            <img ng-src="{{person.face}}">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+          </div>
+
+
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic">
+    
+            <p>
+              <button class = "button button-calm" ng-model=pickeddate >
+              {{pickeddate | date:"fullDate"}}
+              </button>
+              <button class = "button button-balanced" ng-model=pickedtime>
+              {{pickeddate | date:'shortTime'}}
+              </button>
+            </p>
+
+            <p>
+              <div>
+              <h2 class="graybackground"><b>Price {{class.rate}}$/hr</b></h2>
+              </div>
+            </p>
+
+            <p>
+              <div>
+              <h2 class="graybackground"><b>{{class.duration}} hrs</b></h2>
+              </div>
+            </p>
+
+            <p>
+              <h2 class="graybackground"><b>{{class.paymentMethod}} Payments</b></h2>
+            </p>
+
+          </div>
+
+          <div class="item tabs tabs-secondary tabs-icon-left">
+            <a class="tab-item" ng-show="class.confirmed && currentTime<=class.bookingtime">
+              <i class="icon ion-happy-outline"></i> Confirmed
+            </a>
+             <a class="tab-item" ng-click="confirmOrder(order.providerid)" ng-show="!class.confirmed&&(authData.uid!=order.providerid)&&((order.paymentEnabled != true) || (order.accepted==true))&&currentTime<=class.bookingtime">
+              <i class="icon positive ion-thumbsup"></i> Accept
+            </a>
+
+            <p align="center" ng-if="currentTime>class.bookingtime&&((authData.uid!=order.providerid)||class.confirmed)"> Expired</p>
+
+            <a class="tab-item" ng-click="deleteclass()" ng-show="!class.confirmed&&(authData.uid===order.providerid)&&currentTime<class.bookingtime">
+              <i class="icon ion-thumbsup"></i> Delete
+            </a>       
+
+            <a class="tab-item" ng-click="deleteclass()" ng-show="!class.confirmed&&(authData.uid===order.providerid)&&currentTime>class.bookingtime">
+              <i class="icon ion-thumbsup"></i> Delete Expired Listing
+            </a> 
+
+          </div>
+        </div>
+
+      </ion-item> 
+
+    </ion-list>
+  </ion-content>
+</ion-view>

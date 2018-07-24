@@ -1,0 +1,161 @@
+<ion-view view-title="Intro" hide-nav-bar="true">
+<!--
+  <ion-nav-buttons side="left">
+    <button class="button button-positive button-clear no-animation"
+            ng-click="ologin()" style="color: white" ng-show="!slideIndex">
+      Skip Intro
+    </button>
+    <button class="button button-positive button-clear no-animation"
+            ng-click="previous()" style="color: white" ng-show="slideIndex > 0">
+      Previous
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-positive button-clear no-animation"
+            ng-click="next()" style="color: white" ng-show="slideIndex != 2">
+      Next
+    </button>
+    <button class="button button-positive button-clear no-animation"
+            ng-click="login()" style="color: white" ng-show="slideIndex == 2">
+      <b>Start Learnly</b>
+    </button>
+  </ion-nav-buttons>
+-->
+  <ion-content id="loginbackground" scroll="false">
+
+  <ion-slide-box on-slide-changed="slideChanged(index)" does-continue="true" show-pager="false" style=" background-color:transparent;">
+    <ion-slide style="background-color:transparent;">
+      <div id="logo">
+        <img ng-src="img/assets/Learnly-logo-300-2017.png" width="30%"/>
+      </div>
+      <div class="button-bar" style="border: 1px solid #0c63ee; background:#7f7f7f;
+    background:rgba(255,255,255,0.5);">
+        <div class="col center" ng-class="{subjectActive: activeSlide == 0}" ng-click="slideTo(0)">
+          Sign In
+        </div>
+         <div class="col center" ng-class="{subjectActive: activeSlide == 1}" ng-click="slideTo(1)">
+          Register
+        </div>
+      </div>
+    <ion-slide-box id="subjectboxcontainer" delegate-handle="login" does-continue="false" on-slide-changed="loginSlideChanged($index)">
+            <ion-slide style="background-color:transparent;">
+              <ion-content class="has-footer" has-header="false" scroll="false">
+                <form ng-submit="emailLogin()">
+                  <div class="list list-inset item-button-right">
+                    <label class="item item-input">
+                      <input type="text" placeholder="Email" ng-model="emailData.address">
+                    </label>
+                    <label class="item item-input">
+                      <input type="password" placeholder="Password" ng-model="emailData.password">
+
+                    </label>
+                    <button type="submit" class="button button-clear">
+                        <i class="icon ion-arrow-right-c icon-accessory" style="color: black"></i>
+                    </button>
+                  </div>
+                </form>
+                  <h4>
+                    or
+                  </h4>
+                  <div ng-hide="authData!=null" ng-click="login()">
+                    <img ng-src="img/facebooklogin.png" width="300"/>
+                  </div>
+<!--
+                  <button class="button button-positive" style="width: 288px" ng-click="anonymousLogin()">
+                    Sign In Later
+                  </button>
+                -->
+                  <br>
+                  <div>
+                    By signing in, you agree to our
+                  </div>
+                  <div><a ng-click = "openBrowser()"><b>Terms of Use and Privacy Policy</b></a></div>
+            </ion-content>
+          </ion-slide>
+          <ion-slide style="background-color:transparent;">
+              <ion-content class="has-footer" has-header="false" scroll="false">
+                <form ng-submit="createEmailUser()">
+                  <div class="list list-inset">
+                    <label class="item item-input">
+                      <input type="text" placeholder="Email" ng-model="emailData.address" required>
+                    </label>
+                    <label class="item item-input">
+                      <input type="password" placeholder="Password" ng-model="emailData.password" required>
+                    </label>
+                    <label class="item item-input">
+                      <input type="password" placeholder="Confirm Password" ng-model="emailData.password2" required>
+                    </label>
+                  </div>
+
+                  <button type="submit" class="button button-positive" style="width: 288px">
+                    Create Account
+                  </button>
+                  </form>
+                  <br>
+                    or
+                  </h4>
+                  <div ng-hide="authData!=null" ng-click="login()">
+                    <img ng-src="img/facebooklogin.png" width="300"/>
+                  </div>
+<!--
+                <div>
+                    By registering, you agree to our
+                  </div>
+                  <div><a onclick="window.open('http://learnly.sg/privacy-policy/', '_system', 'location=yes'); return false;"><b>Terms of Use and Privacy Policy</b></a></div>
+                -->
+            </ion-content>
+          </ion-slide>
+        </ion-slide-box>
+
+
+
+    </ion-slide>
+    <ion-slide style="background-color:transparent;" style="padding-top: 50px;">
+    <br>
+      <h2>Learn Near You</h2>
+      <div class="row">
+        <div class="col" style="text-align: right;"><img ng-src="img/grids/Student-3-icon.png" width="40%"/></div>
+        <div class="col" style="text-align: left;"><img ng-src="img/grids/Boss-5-icon.png" width="40%"/></div>
+      </div>
+
+      <h4>Choose from</h4>
+      <h5>{{numTutors}} users</h5>
+      <h5>33 subjects & skills</h5>
+
+      <div class="row">
+        <div class="col" style="text-align: right;"><img ng-src="img/grids/Analytics-icon.png" width="40%"/></div>
+        <div class="col" style="text-align: left;"><img ng-src="img/grids/Makeup-icon.png" width="40%"/></div>
+      </div>
+    </ion-slide>
+    <ion-slide style="background-color:transparent;">
+      <div class="row">
+        <div class="col" style="text-align: right;"><img ng-src="img/grids/Smartphone-Message-icon.png" width="40%"/></div>
+        <div class="col" style="text-align: left;"><img ng-src="img/grids/Makeup-icon.png" width="40%"/></div>
+      </div>
+      <h3>Features</h3>
+      <div id="list">
+        <ul>
+          <li>Free To List</li>
+          <li>Live Chat</li>
+          <li>Users Reviews</li>
+        </ul>
+      </div>
+      <br>
+
+      <div ng-hide="authData!=null" ng-click="login()">
+        <img ng-src="img/facebooklogin.png" width="300"/>
+      </div>
+    <!--
+      <button class="button button-positive" style="width: 288px" ng-click="anonymousLogin()">
+        Sign In Later
+      </button><br>
+      -->
+      <div>
+        By signing in, you agree to our
+      </div>
+      <div><a onclick="window.open('https://belearnly.com/pages/terms-conditions', '_system', 'location=yes'); return false;"><b>Terms of Use and Privacy Policy</b></a></div>
+
+    </ion-slide>
+  </ion-slide-box>
+</ion-content>
+</ion-view>

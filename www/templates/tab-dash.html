@@ -1,0 +1,275 @@
+<ion-view view-title="Learnly">
+
+
+    <ion-nav-title class="slide-left-right">
+      <div class="row">
+        <!--
+        <div><img style="margin-left:-5px;padding-right:5px" class="header icon" ng-src="img/assets/Learnly-logo-300-2017.png" height="32px" ng-click="showVersion()"/></div>
+      -->
+        <span id="fakesearch" ui-sref="search" style="background-color:#16b2d6;color:#c5e2ef;font-size:13px;text-align:left; align:center;"><i class="icon ion-ios-search placeholder-icon" style="color:#c5e2ef"></i>Search Learnly</span>
+
+      </div>
+    </ion-nav-title>
+
+
+    <ion-nav-buttons side="left">
+
+<div>
+  <img style="margin-left:15px; margin-top:5px" class="header icon" ng-src={{defaultCountry.flag}} height="25px" ng-click="openPopover($event)" id="countrypopover"/>
+</div>
+                    <!--
+
+                    <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="tab.dash-favorites" style="margin-right:15px;">
+                      <img style="margin-left:15px; margin-top:5px" class="header icon" ng-src={{defaultFlag}} height="25px" ng-click="openPopover($event)" id="countrypopover"/>
+
+                    </button>
+
+                    <img style="margin-left:15px; margin-top:5px" class="header icon" ng-src={{defaultFlag}} height="25px" ng-click="openPopover($event)" id="countrypopover"/>
+
+                    <img style="margin-left:15px;" class="header icon" ng-src="img/assets/Learnly-logo-300-2017.png" height="32px" ng-click="showVersion()"/>
+        -->
+    </ion-nav-buttons>
+
+    <ion-nav-buttons side="right">
+
+      <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="tab.dash-favorites" style="margin-right:15px;">
+        <i class="icon ion-heart" style="color:#f26e84"></i>
+      </button>
+    </ion-nav-buttons>
+
+    <!--
+    <ion-nav-buttons side="right">
+      <button ng-show="authData" class="button button-positive button-clear no-animation" ui-sref="tab.account-settings">
+        <i class="ion-gear-a" style="color: white"></i>
+      </button>
+    </ion-nav-buttons>
+  -->
+
+  <ion-content class="has-header" scroll="false">
+          <div class="button-bar">
+            <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+              Tuition
+            </div>
+             <div class="col center" style="background-color:white;color:black;" ng-class="{subjectActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+              Lifestyle
+            </div>
+          </div>
+          <div class="button-bar" style="height:2px;">
+          <div class="col center" ng-class="{workshopActive: categorySlideIndex == 0}" ng-click="categorySlideTo(0)">
+            </div>
+            <div class="col center"></div>
+            <div class="col center" ng-class="{workshopActive: categorySlideIndex == 1}" ng-click="categorySlideTo(1)">
+            </div>
+            </div>
+
+          <div class="row" ng-hide="tuition">
+
+                    <img ng-src="img/gif/loading_flying.gif" style="border-radius: 10px; max-width:100%;"/>
+          </div>
+
+          <ion-slide-box id="subjectboxcontainer" does-continue="false" on-slide-changed="categorySlideChanged($index)" ng-if="tuition">
+            <ion-slide>
+              <ion-content>
+                <div class="intro carousel" ng-if="specialFestival.length>0" ng-style="{'background-image': 'url('+specialFestival[0].$value+')', 'background-size':'cover','background-position':'center'}">
+                  <h1 style="margin-bottom: 0px;"></h1>
+                </div>
+                <div class="intro carousel" ng-if="specialFestival.length==0" ng-style="{'background-image': 'url(img/carousel/tuition-s.png)', 'background-size':'cover','background-position':'center'}" >
+                  <a style="text-decoration: none">
+                  <h1 style="margin-bottom: 0px;"></h1></a>
+                </div>
+                <div class="item item-divider">
+                Essential Academic Subjects
+                </div>
+                <div class="row" ng-repeat="subject in tuition" ng-if="$index % 2 === 0">
+                    <div class="col col-30" ng-if="$index < 13" ng-style="{'background-image': 'linear-gradient(
+      rgba(7, 108, 136, 0.15),
+      rgba(7, 108, 136, 0.15)
+    ),url({{tuition[$index].pic}})'}" ui-sref="tab.dash-search-para({keyWord: tuition[$index].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white; font-weight: normal;" ui-sref="tab.dash-search-para({keyWord: tuition[$index].$id})"><b>{{tuition[$index].$id}}</b></a>
+                    </div>
+                    <div class="col col-30" ng-if="$index + 1 < 13" ng-style="{'background-image': 'linear-gradient(
+      rgba(7, 108, 136, 0.15),
+      rgba(7, 108, 136, 0.15)
+    ),url({{tuition[$index+1].pic}})'}" ui-sref="tab.dash-search-para({keyWord: tuition[$index+1].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: tuition[$index+1].$id})"><b>{{tuition[$index+1].$id}}</b></a>
+                    </div>
+                </div>
+              <div class="item item-divider">
+              Free Tutor Matching
+              </div>
+              <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+                  <div class="col" style="text-align: center;">
+                    <p>Don't like scrolling? Let tutors contact you instead</p>
+                    <p><a class="item assertive" href="#/tab/ask">
+                      <i class="ion-paper-airplane"></i> Request A Tutor
+                    </a></p>
+              </div>
+            </div>
+
+                <div class="item item-divider">
+                Tutor Shoutouts
+                </div>
+
+                <ion-item ng-repeat="tutorOffer in tutorOffers" class="item-thumbnail-left" ui-sref="tab.dash-person({alias: tutorOffer.requester.id})">
+
+                  <img ng-if="tutorOffer.requester.face&&(tutorOffer.requester.face!='img/assets/placeholder.png')" ng-src="{{tutorOffer.requester.face}}" height="25" style="border-radius: 10px" err-src="img/assets/nologin.png"/>
+                  <img ng-if="tutorOffer.requester.face=='img/assets/placeholder.png'" ng-src="img/assets/nologin.png" height="25" style="border-radius: 10px"/>
+                  <img ng-if="!tutorOffer.requester.face" ng-src="img/assets/nologin.png" height="25" style="border-radius: 10px"/>
+                  <h2>{{tutorOffer.requester.name}}</h2>
+                  <h3 class="royal">{{tutorOffer.location}}</h3>
+                  <div class="item-text-wrap">
+                  <p ng-if="tutorOffer.meta">{{abstract(tutorOffer.task.writeup,120)}}</p>
+                  </div>
+
+                </ion-item>
+
+                <div class="item item-divider" ng-click="showRandomSubjectTutors()">
+                Recent {{displaySubject}} Tutors
+                <i class="icon ion-android-refresh icon-accessory"></i>
+                </div>
+
+                <ion-item ng-repeat="result in results" class="item-thumbnail-left" ui-sref="tab.dash-person({alias: result.key, distance: result.distance})">
+                  <img ng-if="result.face&&(result.face!='img/assets/placeholder.png')" ng-src="{{result.face}}" height="25" style="border-radius: 10px" err-src="img/assets/nologin.png"/>
+                  <img ng-if="result.face=='img/assets/placeholder.png'" ng-src="img/assets/nologin.png" height="25" style="border-radius: 10px"/>
+                  <img ng-if="!result.face" ng-src="img/assets/nologin.png" height="25" style="border-radius: 10px"/>
+                  <div class="row">
+                    <div class="col col-60"><b class="item-text-wrap">{{result.name}}</b>
+                        <p ng-if="result.location.name">{{result.location.name}}</p>
+                        <div ng-show="result.levels" class="col col-90"><h4>Teaches</h4>
+                          <div ng-repeat="(key,value) in result.levels">
+                               <p style="overflow: visible; text-align: left;">{{key}}</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-32" style="color: grey; border-radius: 5px; text-align: center;">
+                      <b ng-if="result.averaged">Avg </b><p>{{defaultCountry.currency}}{{result.rate|currency:"":0}}/hr</p>
+                        <p><img ng-src="img/assets/rank.png" height="25px" ng-repeat="i in makeArrayOfSize(result.rating)"><img ng-src="img/assets/rank-grey.png" height="25px" ng-repeat="i in makeArrayOfSize(5-result.rating)"></p>
+                    </div>
+
+                  </div>
+                </ion-item>
+
+                <div class="item item-divider" style="text-align: center;">
+                Looking For Something Else?
+                </div>
+                <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+                    <div class="col" style="text-align: center;">
+                      <p>Looking for students? Let parents contact you</p>
+                      <p><a class="item royal" href="#/tab/account">
+                        <i class="ion-location"></i> List Your Lesson
+                      </a></p>
+                      <div ng-style="{'background-image':'url(img/referralbanner2.png)'}" ng-click="shareWithFriend()" style="background-size:cover;background-position:-25px center;height:50px">
+                        <div style="width:30%;display:inline-block;line-height:10px;margin-top:10px;text-align:left;padding-left:10px;">
+                          <p style="font-family:OstrichSansBlack;color:#318C9F;font-size:10px;margin-left:">
+                            Referral Code
+                          </p>
+                          <p style="font-family:AvenirMedium;color:white;font-size:15px">
+                            {{user.alias}}
+                          </p>
+                        </div>
+                        <div style="display:inline-block;float:right;font-family:OstrichSansBlack;font-size:15px;width:70%;word-wrap:break-word;overflow:auto;text-align:left;margin-top:5px;color:white;padding-right:10px;padding-left:30px;">
+                            Earn rewards when you invite students with your invite code
+                        </div>
+                      </div>
+
+                    </div>
+                </div>
+                <div class="item item-divider" style="text-align: center;">
+                End of Page
+                </div>
+
+
+              </div>
+
+              </ion-content>
+            </ion-slide>
+            <ion-slide>
+              <ion-content>
+              <div class="intro carousel" ng-style="{'background-image': 'url(img/carousel/lifestyle-s.png)', 'background-size':'cover','background-position':'center'}">
+                  <h1 style="margin-bottom: 0px;"></h1>
+                </div>
+                <div class="item item-divider">
+                Nifty Picks
+                </div>
+                <div class="row" ng-repeat="subject in popular" ng-if="$index % 2 === 0">
+                    <div class="col col-30" ng-if="$index < 20" ng-style="{'background-image': 'url({{popular[$index].pic}})'}" ui-sref="tab.dash-search-para({keyWord: popular[$index].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: popular[$index].$id})"><b>{{popular[$index].$id}}</b></a>
+                    </div>
+                    <div class="col col-30" ng-if="$index + 1 < 20" ng-style="{'background-image': 'url({{popular[$index+1].pic}})'}" ui-sref="tab.dash-search-para({keyWord: popular[$index+1].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: popular[$index+1].$id})"><b>{{popular[$index+1].$id}}</b></a>
+                    </div>
+                </div>
+                <div class="item item-divider">
+                Get Fit
+                </div>
+                <div class="row" ng-repeat="subject in sports" ng-if="$index % 2 === 0">
+                    <div class="col col-30" ng-if="$index < 20" ng-style="{'background-image': 'url({{sports[$index].pic}})'}" ui-sref="tab.dash-search-para({keyWord: sports[$index].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: sports[$index].$id})"><b>{{sports[$index].$id}}</b></a>
+                    </div>
+                    <div class="col col-30" ng-if="$index + 1 < 20" ng-style="{'background-image': 'url({{sports[$index+1].pic}})'}" ui-sref="tab.dash-search-para({keyWord: sports[$index+1].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: sports[$index+1].$id})"><b>{{sports[$index+1].$id}}</b></a>
+                    </div>
+                </div>
+                <div class="item item-divider">
+                Music
+                </div>
+                <div class="row" ng-repeat="subject in music" ng-if="$index % 2 === 0">
+                    <div class="col col-30" ng-if="$index < 20" ng-style="{'background-image': 'url({{music[$index].pic}})'}" ui-sref="tab.dash-search-para({keyWord: music[$index].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: music[$index].$id})"><b>{{music[$index].$id}}</b></a>
+                    </div>
+                    <div class="col col-30" ng-if="$index + 1 < 20" ng-style="{'background-image': 'url({{music[$index+1].pic}})'}" ui-sref="tab.dash-search-para({keyWord: music[$index+1].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: music[$index+1].$id})"><b>{{music[$index+1].$id}}</b></a>
+                    </div>
+                </div>
+                <div class="item item-divider">
+                Unleash Your Inner Geek
+                </div>
+                <div class="row" ng-repeat="subject in coding" ng-if="$index % 2 === 0">
+                    <div class="col col-30" ng-if="$index < 20" ng-style="{'background-image': 'url({{coding[$index].pic}})'}" ui-sref="tab.dash-search-para({keyWord: coding[$index].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: coding[$index].$id})"><b>{{coding[$index].$id}}</b></a>
+                    </div>
+                    <div class="col col-30" ng-if="$index + 1 < 20" ng-style="{'background-image': 'url({{coding[$index+1].pic}})'}" ui-sref="tab.dash-search-para({keyWord: coding[$index+1].$id})">
+                        <a style="text-align: center; text-decoration: none; color: white;" ui-sref="tab.dash-search-para({keyWord: coding[$index+1].$id})"><b>{{coding[$index+1].$id}}</b></a>
+                    </div>
+                </div>
+
+                <div class="item item-divider" style="text-align: center;">
+                Looking For Something Else?
+                </div>
+                <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+                    <div class="col" style="text-align: center;">
+
+                      <p>Looking for students? Let students contact you</p>
+                      <p><a class="item royal" href="#/tab/account">
+                        <i class="ion-location"></i> List Your Lesson
+                      </a></p>
+                      <div ng-style="{'background-image':'url(img/referralbanner2.png)'}" ng-click="shareWithFriend()" style="background-size:cover;background-position:-25px center;height:50px">
+                        <div style="width:30%;display:inline-block;line-height:10px;margin-top:10px;text-align:left;padding-left:10px;">
+                          <p style="font-family:OstrichSansBlack;color:#318C9F;font-size:10px;margin-left:">
+                            Referral Code
+                          </p>
+                          <p style="font-family:AvenirMedium;color:white;font-size:15px">
+                            {{user.alias}}
+                          </p>
+                        </div>
+                        <div style="display:inline-block;float:right;font-family:OstrichSansBlack;font-size:15px;width:70%;word-wrap:break-word;overflow:auto;text-align:left;margin-top:5px;color:white;padding-right:10px;padding-left:30px;">
+                            Earn rewards when you invite students with your invite code
+                        </div>
+                      </div>
+
+                    </div>
+                </div>
+                <div class="item item-divider" style="text-align: center;">
+                End of Page
+                </div>
+              </ion-content>
+
+            </ion-slide>
+
+          </ion-slide-box>
+
+  </ion-content>
+
+
+</ion-view>

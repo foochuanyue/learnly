@@ -1,0 +1,174 @@
+<ion-view view-title="Class Details">
+  <ion-content style="background-color: #EEE;">
+    <ion-list>
+      <div class="item item-divider">
+        Coaching Detail
+      </div>
+      <ion-item class="item item-avatar item-button-right">
+        <img ng-if="person.face&&(person.face!='img/assets/placeholder.png')" ng-src="{{person.face}}" err-src="img/assets/nologin.png"/>
+        <img ng-if="(person.face=='img/assets/placeholder.png')" ng-src="img/assets/nologin.png"/>
+        <img ng-if="!person.face" ng-src="img/assets/nologin.png">
+        <b>{{person.name}}</b>
+        <p>{{person.location.name}}</p>
+        <button class="button button-clear" style="width: 30%; overflow: hidden;"><h4>{{lessonName}} {{newLesson.name}}</h4></button>
+      </ion-item>
+      </ion-list>
+       <img ng-hide="lesson.averaged" align="center" ng-src="img/gif/loading_spinner.gif" height="80px" style="border-radius: 10px"/>
+  <div class="list card" ng-show="lesson.averaged&&lesson.levels">
+
+        <div class="item item-divider"><b>Choose a Level</b></div>
+
+
+          <label class="item item-radio" ng-repeat="(key,value) in lesson.levels" ng-if="lesson.levels">
+           <ion-radio ng-model="newLesson.name" ng-value="key" ng-click="resizeScroll()">{{key}} @ {{defaultCountry.currency}}{{value|currency:"":0}}/hr
+            </ion-radio>
+          </label>
+  </div>
+
+
+  <div class="list card" ng-show="newLesson.name">
+
+    <div>
+      <div class="item item-divider">Duration Per Lesson (hrs)</div>
+      <div class = "item item-body">
+      <input type="text" class="js-range-slider" />
+      </div>
+    </div>
+
+    <span ng-if="person.showSchedule">
+      <div class="item item-divider">
+        Preferred Timeslot
+      </div>
+
+     <div class="row">
+          <div class="col" style="padding: 0px;">
+            <span class="input-label">Day</span>
+            <ul class="list">
+              <li class="item item-checkbox" ng-repeat="day in days">
+                 <label class="checkbox">
+                  {{day}}
+                 </label>
+              </li>
+            </ul>
+
+                </div>
+          <div class="col" ng-repeat="time in person.schedule" style="padding: 0px;">
+            <span class="input-label">{{time.name}}</span>
+            <ul class="list">
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].mon" ng-if="time.mon">
+                   <i ng-if='!time.mon' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].tue" ng-if="time.tue">
+                   <i ng-if='!time.tue' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].wed" ng-if="time.wed">
+                   <i ng-if='!time.wed' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].thu" ng-if="time.thu">
+                   <i ng-if='!time.thu' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].fri" ng-if="time.fri">
+                   <i ng-if='!time.fri' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].sat" ng-if="time.sat">
+                   <i ng-if='!time.sat' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+              <li class="item item-checkbox">
+                 <label class="checkbox">
+                   <input type="checkbox" ng-model="select[time.name].sun" ng-if="time.sun">
+                   <i ng-if='!time.sun' class='icon ion-close-round'
+            style='margin-left: 5px; color: grey'></i>
+                 </label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        </span>
+      </div>
+
+<!--
+      <div class="item item-divider">
+        All HAIL {{select["Morning"].mon}}
+      </div>
+      <div class="item item-divider">
+        All HAIL {{select["Night"].sat}}
+      </div>
+-->
+<!--
+  <div class="list card">
+      <div class="item item-divider">Select Location</div>
+        <label class="item item-radio">
+          <input type="radio" name="group">
+          <div class="item-content">
+            {{person.name}}'s Place
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+        <label class="item item-radio">
+          <input type="radio" name="group">
+          <div class="item-content">
+            My Place
+          </div>
+          <i class="radio-icon ion-checkmark"></i>
+        </label>
+      <div class="item item-body" ng-show="!person.skills">
+        <div>
+          None <b>listed</b>
+        </div>
+      </div>
+  </div>
+-->
+  <div class="list card" ng-show="newLesson.name">
+      <div class="item item-divider">Class Summary</div>
+      <div class="item item-body" ng-show="true">
+        <div>
+          {{newLesson.name}} {{lessonName}}
+          <p><b ng-if="lesson.averaged&&lesson.levels">{{defaultCountry.currency}}{{lesson.levels[newLesson.name]|currency:"":0}}/hr</b></p>
+          <p><b>{{duration}} hrs/lesson</b><b ng-if="!(lesson.averaged&&lesson.levels)"> @ {{defaultCountry.currency}}{{lesson.rate|currency:"":0}}/hr</b></p>
+        </div>
+      </div>
+  </div>
+
+  <button class="tabs button button-block button-positive" ng-click="disclaimerAlert('I understand that class requests are independent agreements between me and the tutor. Learnly provides this service in good faith and provides no warranties whatsoever.');" ng-show="newLesson.name">
+      Request Class
+    </button>
+    <!--<button class="tabs button button-block button-positive" ng-click="openModal(1)" ng-show="newLesson.name">-->
+  <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+      <div class="col" style="text-align: left;">
+          <p><b>Decide on your lesson details</b> and we will send a <b>booking request</b> to your tutor {{person.name}}</p>
+          <p>A chat with {{person.name}} will be opened for you to make any further enquiries and arrange your first lesson</p>
+          <p>Tutors may not be able to accept all requests depending on their availability</p>
+      </div>
+  </div>
+
+<!--
+    <button class="tabs button button-block button-positive" ng-click="startChat();" ui-sref="tab.chats" ui-sref-opts="{reload: true, notify: true}" ng-show="newLesson.name">
+      Request Class
+    </button>
+-->
+  </ion-content>
+</ion-view>

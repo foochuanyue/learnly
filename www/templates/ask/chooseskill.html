@@ -1,0 +1,38 @@
+<div class="modal">
+<header class="bar bar-header bar-calm">
+  <h1 class="title">Add Filters</h1>
+  <div class="button button-clear" ng-click=" closeModal(3)"><span class="icon ion-close"></span></div>
+</header>
+<ion-content has-header="true" has-footer delegate-handle="addSkillScroll" padding="true" style="padding-top: 20%;">
+  
+  <div class="list list-inset">
+      <ion-list>
+      <!--
+        <ion-item><h4>Don't find a skill you are teaching? Email us at </h4></ion-item>
+      -->
+        <div ng-repeat="category in categories">
+          <ion-item class="item-dark"
+                    ng-click="toggleGroup(category)"
+                    ng-class="{active: isGroupShown(category)}">
+              <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+            {{category.name}}
+          </ion-item>
+
+            <label class="item item-radio" ng-repeat="subject in category.subjects" ng-show="isGroupShown(category)">
+
+           <ion-radio class="item-accordion" ng-model="currentfilter" ng-value="subject" ng-click="addTag(subject); closeModal(3); currentfilter=null ">
+           
+
+              <div class="item item-avatar">
+            <img ng-src="{{getSkillPic(subject)}}">
+            <h2>{{subject}}</h2>
+         </div>
+          </ion-radio>
+          </label>
+        </div>
+        </ion-list>
+      <div class="item item-divider"><h4>Want more subjects? Chat with us through the Settings</h4></div>
+
+  </div>
+</ion-content>
+</div>

@@ -1,0 +1,81 @@
+﻿<div class="modal">
+	<header class="bar bar-header bar-calm">
+	  <h1 class="title">Confirm Card Details</h1>
+	  <div class="button button-clear" ng-click="closeModal(1)"><span class="icon ion-close"></span></div>
+	</header>
+	<ion-content has-header="true" padding="true" style="padding-top: 15%;">
+
+		<form name="checkoutForm" stripe-form="stripeCallback" ng-submit="onSubmit()" data-abide>
+
+	<div ng-if="processing" us-spinner></div>
+
+	<fieldset>
+		<legend><b>Payment Information</b></legend>
+		<br>
+
+		<div class="column">
+			<div class="large-6 columns" ng-class="{error: checkoutForm.number.$invalid}">
+			Card Information
+				<label class="item item-input">
+					<input ng-model="number" name="number" payments-format="card" payments-validate="card"
+					       placeholder="Card Number" type="tel"/>
+				</label>
+				<div ng-if="checkoutForm.number.$invalid" class="paymentsinputs">
+    Invalid card number!
+
+</div>
+<br>
+
+			</div>
+			<div class="large-3 columns" ng-class="{error: checkoutForm.expiry.$invalid}">
+				Expiry
+				<label class="item item-input">
+					<input ng-model="expiry" name="expiry" payments-format="expiry" payments-validate="expiry"
+					       placeholder="Expiry" type="tel"/>
+				</label>
+				<div ng-if="checkoutForm.expiry.$invalid" class="paymentsinputs">
+    Invalid expiry date!
+</div>
+<br>
+			</div>
+			<div class="large-3 columns" ng-class="{error: checkoutForm.cvc.$invalid}">
+				CVC
+				<label class="item item-input">
+					<input ng-model="cvc" name="cvc" payments-format="cvc" payments-validate="cvc"
+					       placeholder="CVC" type="tel"/>
+				</label>
+				<div ng-if="checkoutForm.cvc.$invalid" class="paymentsinputs">
+    Ivalid CVC!
+</div>
+<br>
+			</div>
+
+			<br>
+			<div class="large-12 columns">
+				<strong>
+					Payment Option: {{workshopOption}}
+				</strong>
+			</div>
+			<div class="large-12 columns" ng-if="promotionSelected">
+				<strong>
+					Promotion: {{bookingQuantity}} pax for ${{promoValue}}, (up to: ${{workshop.price*bookingQuantity}} value)
+				</strong>
+			</div>
+			<div class="large-12 columns">
+				<strong>
+					Amount to pay: SGD {{finalPrice}}
+				</strong>
+			</div>
+		</div>
+	</fieldset>
+
+
+	 <button class="tabs button button-block button-positive" ng-click="onSubmit()" ng-disabled="checkoutForm.$invalid">
+	      Submit Payment
+	    </button>
+
+
+</form>
+
+	</ion-content>
+</div>

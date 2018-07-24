@@ -1,0 +1,100 @@
+<div class="modal">
+	<header class="bar bar-header bar-calm">
+	  <h1 class="title">Set Schedule</h1>
+	  <div class="button button-clear" ng-click="closeModal(5)"><span class="icon ion-close"></span></div>
+	</header>
+	<ion-content has-header="true" padding="true" style="padding-top: 20%;">
+        <div class="row">
+          <div class="col" style="padding: 0px;">
+			<span class="input-label">Day</span>
+			<ul class="list">
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Mon
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Tue
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Wed
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Thu
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Fri
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Sat
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			     	Sun
+			     </label>
+			  </li>				  	  
+			</ul>
+
+          </div>
+          <div class="col" ng-repeat="day in user.schedule" style="padding: 0px;">
+			<span class="input-label">{{day.name}}</span>
+			<ul class="list">
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.mon">
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.tue">
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.wed">
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.thu">
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.fri">
+			     </label>
+			  </li>
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.sat">
+			     </label>
+			  </li>		
+			  <li class="item item-checkbox">
+			     <label class="checkbox">
+			       <input type="checkbox" ng-model="day.sun">
+			     </label>
+			  </li>					  	  
+			</ul>
+
+          </div>
+         
+        </div>
+
+		<div class="list list-inset">
+
+		    <button class="tabs button button-block button-positive" ng-click="closeModal(5)">
+		      Done
+		    </button>
+		</div>
+	</ion-content>
+</div>

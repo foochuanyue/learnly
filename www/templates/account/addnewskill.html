@@ -1,0 +1,102 @@
+<ion-view view-title="Add Skills">
+<ion-content has-footer padding="true" style="background-color: #EEE;">
+   <div class="row" style="color: grey; background:#EEE; border-radius: 5px;">
+        <div class="col" style="text-align: left;">
+            <p>For students to find you, <b>login at least once a week</b> for your profile to <b>feature in the search results</b>.</p><p>When you have found a tutor/student, you can manage them through the<b> Inbox scheduler</b></p><p>To stop receiving student requests, <b>visit the Settings</b> to hide your profile from listings</p>
+        </div>
+    </div>
+	<div class="list list-inset" style="background-color: #EEE;">
+
+	<li class="item-accordion" style="list-style-type:none" ng-click="showLevelSelector(newSkill.name, newSkill.category.levels, newSkill.category.customSubject);" ng-if="newSkill.name">
+	    <label class="item item-avatar item-button-right">
+	      <img ng-src="{{getSkillPic(newSkill.name)}}">
+	      <h2>{{newSkill.name}}</h2>
+	    <button class="button button-assertive" ng-click="newSkill.name = null; newSkill.level = null; newSkill.trial = null; toggleGroup(newSkill.category); newSkill.category=null;" ng-if="newSkill.name">
+	      Reset
+	    </button>
+
+
+	   </label>
+	   <!--
+	      <div class="item-button-right" ng-show="newSkill.level">
+		      <button class="button button-block button-small button-assertive">
+			      Reset Level
+			  </button>
+		  </div>
+-->
+		<label class="item item-input item-select item-balanced" ng-show="newSkill.level">
+		      <div class="input-label">
+		          Class Level
+		      </div>
+		      <select ng-disabled=true>
+		          <option selected>{{newSkill.level}}</option>
+		      </select>
+		</label>	   
+	</li>
+
+      <ion-list ng-hide="newSkill.name">
+
+        <div ng-repeat="category in categories">
+          <ion-item class="item-dark"
+                    ng-click="toggleGroup(category)"
+                    ng-class="{active: isGroupShown(category)}">
+              <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{category.name}}
+          </ion-item>
+
+          	<label class="item item-radio" ng-repeat="subject in category.subjects" ng-show="isGroupShown(category)">
+	         <ion-radio class="item-accordion" ng-model="newSkill.name" ng-value="subject" ng-click="showLevelSelector(subject, category.levels, category.customSubject); newSkill.category = category;">
+	         
+
+	            <div class="item item-avatar">
+			      <img ng-src="{{getSkillPic(subject)}}" err-src="img/assets/placeholder.png"/>
+			      <h2>{{subject}}</h2>
+			   </div>
+
+<!--
+		         <label class="item item-select" ng-show="category.levels" ng-if="newSkill.name===subject">
+	         	    <select ng-options="level for level in category.levels" placeholder="Select a course level" required>
+				      <option value="">{{newSkill.level}}</option>
+				    </select>
+				</label>
+-->
+				<label class="item item-input item-select item-balanced" ng-show="newSkill.name===subject">
+				      <div class="input-label">
+				          Class Level
+				      </div>
+				      <select>
+				          <option selected>{{newSkill.level}}</option>
+				      </select>
+				</label>
+
+		     	</ion-radio>
+	        </label>
+        </div>
+      </ion-list>
+
+
+	  <div class="item item-divider"><h4>Want more subjects? Chat with us through the Settings</h4></div>
+
+      <div class="item item-divider">Hourly Rate $/hr</div>
+      <div class = "item item-body">
+      <input type="text" class="js-range-slider4" />
+      </div>
+
+		<li class="item item-toggle">
+		     Have Free Trial Lesson
+		     <label class="toggle toggle-balanced">
+		       <input type="checkbox" ng-model="newSkill.trial">
+		       <div class="track">
+		         <div class="handle"></div>
+		       </div>
+		     </label>
+		  </li>
+
+	    <button ng-disabled="userLoading" class="tabs button button-block button-positive" ng-click="toggleGroup(newSkill.category); addSkill(newSkill.name, newSkill.rate, newSkill.level, newSkill.trial)">
+	      Add Skill
+	    </button>
+
+	</div>
+</ion-content>
+</ion-view>

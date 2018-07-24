@@ -1,0 +1,197 @@
+<ion-view view-title="Details">
+  
+  <ion-nav-back-button>
+  </ion-nav-back-button>
+
+  <ion-content class="has-header">
+
+        <ion-item class="item" type="item-text-wrap" ng-show="orderType=='private'">
+        <div class="list card">
+
+          <div class="row item item-avatar">
+            <img ng-if="person.face" ng-src="{{person.face}}" err-src="img/assets/placeholder.png"/>
+            <img ng-if="!person.face" ng-src="img/assets/placeholder.png">
+            <div class = "col col-offset-25 col-45">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+            </div>
+            <div class="col col-35" align="center">
+            <p>
+              ${{order.orderDetails.rate}}/hr<span ng-if="order.orderDetails.duration">, {{order.orderDetails.duration}}hrs</span>
+            </p>
+            </div>
+          </div>
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic" err-src="img/assets/placeholder.png"/>
+            <span ng-if="authData.uid===order.requesterid">Requesting for {{order.orderDetails.level}} {{order.orderDetails.lessonName}}</span>
+            <span ng-if="authData.uid===order.providerid">Teaching {{order.orderDetails.level}} {{order.orderDetails.lessonName}}</span>
+            <p></p>
+            
+                <div class="row" id="scheduleheader" ng-if="order.orderDetails.schedule">
+                  
+                  <div class="col"><i class="ion-clock" style="color: black"></i></div> 
+                  <div class="col"><b>Mo</b></div>
+                  <div class="col"><b>Tu</b></div>
+                  <div class="col"><b>We</b></div>
+                  <div class="col"><b>Th</b></div>
+                  <div class="col"><b>Fr</b></div>
+                  <div class="col"><b>Sa</b></div>
+                  <div class="col"><b>Su</b></div>            
+                </div>
+
+                <div class="row" id="schedulechild" ng-repeat="(key,value) in order.orderDetails.schedule">
+                  <div class="col" id="bgtext"><img ng-src="{{getTimeOfDayPicture(key)}}" style="width:30px; height:30px;"></div>
+                  <div class="col"><i ng-if='value.mon' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.tue' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.wed' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.thu' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.fri' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.sat' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>
+                  <div class="col"><i ng-if='value.sun' class='icon ion-checkmark-round'
+                  style='margin-left: 5px; color: green'></i></div>  
+                  
+                </div>
+
+                <div class="addtoppadding">
+                <label style="text-align: left; float:left" class = "fontsize18 addtoppadding"><b>Lessons</b></label>
+                  <button ng-if="addClass==true" style="text-align:right; float:right" class="button button-positive addbotmargin" ui-sref="tab.chat-ordercreate({id: orderId, type: orderType, chatId: chatId})" ng-show="authData.uid===order.requesterid">
+                    <i class="ion-ios-compose" style="color: white"> New Class Date</i>
+                  </button>
+                  <hr style="clear:both;"/>
+                </div>
+
+                <div>
+                <ion-list class="has-header">
+
+                <ion-item ng-repeat="class in classes.slice().reverse()" ng-click="resetload()" ui-sref="tab.chat-orderdetail({id: orderId, type:orderType, class:class.key, chatId: chatId})">
+                <label style="text-align: left; float:left" class="addtoppadding">{{class.value.bookingtime | date:"EEE, MMM d, y h:mm a"}}</label>
+                <button style="text-align:right; float:right" class="button button-outline button-balanced" ng-show="class.value.confirmed&&!classExpired">
+                    <label> Confirm
+                    </label>
+                  </button>
+                  <button style="text-align:right; float:right" class="button button-outline button-assertive" ng-show="!class.value.confirmed&&!classExpired">
+                    <label> Pending
+                    </label>
+                  </button>
+                  <button style="text-align:right; float:right" class="button button-outline button-assertive" ng-show="classExpired">
+                    <label> Expired
+                    </label>
+                  </button>
+                  <ion-option-button class="button-assertive" ng-click="deleteClass(class.key, class.value.messageId)" ng-hide="class.value.confirmed">
+                  Delete
+                  </ion-option-button>
+                </ion-item>
+                </ion-list>
+                <div style="font-size:13px;color:gray" ng-if="(!classes)&&(authData.uid!==order.requesterid)">
+                  Ask Tutor To Add New Lesson Date.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(!classes)&&(authData.uid==order.requesterid)">
+                  Set a Lesson Date for your Student.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="classes&&(authData.uid==order.requesterid)&&!classes[0].class.value.confirmed&&!classExpired">
+                  Please wait for your Student to Accept the Offer.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="classes&&(authData.uid!==order.requesterid)&&!classes[0].class.value.confirmed&&!classExpired">
+                  Please Click the Date Above to Accept the Offer.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(classExpired)&&(authData.uid!==order.requesterid)">
+                  The Lesson has Expired wait for Tutor to add a New Lesson.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(classExpired)&&(authData.uid==order.requesterid)">
+                  The Lesson has Expired Please offer a new Lesson.
+                </div>
+          </div>
+        </div>
+      </div>
+
+      </ion-item> 
+
+      <ion-item class="item" type="item-text-wrap" ng-show="orderType=='gigs'">
+        <div class="list card">
+
+          <div class="row item item-avatar">
+            <img ng-if="person.face" ng-src="{{person.face}}" err-src="img/assets/placeholder.png"/>
+            <img ng-if="!person.face" ng-src="img/assets/placeholder.png">
+            <div class = "col col-offset-25 col-45">
+            <h2>{{person.name}}</h2>
+            <p>{{order.time | date:"longDate"}}</p>
+            </div>
+            <div class="col col-35" align="center">
+            <p ng-if="order.orderDetails.paymentMethod">
+              {{order.orderDetails.paymentMethod}} Payment
+            </p>
+            <p>
+              <span ng-if="order.orderDetails.duration">${{order.orderDetails.rate}}/hr, {{order.orderDetails.duration}}hrs</span>
+            </p>
+            </div>
+          </div>
+
+
+
+          <div class="item item-body">
+            <img class="full-image" ng-src="{{job.task.pic}}" ng-if="job.task.pic">
+            {{order.orderDetails.gigDesc}}
+            <p></p>
+            <div class="addtoppadding">
+              <label style="text-align: left; float:left" class = "fontsize18 addtoppadding"><b>Lessons</b></label>
+              <button ng-if="addClass==true" style="text-align:right; float:right" class="button button-positive addbotmargin" ui-sref="tab.chat-ordercreate({id: orderId, type: orderType, chatId: chatId})" ng-show="authData.uid===order.providerid">
+                <i class="ion-ios-compose" style="color: white"> New Class Date</i>
+              </button>
+              <hr style="clear:both;"/>
+            </div>
+
+            <ion-list class="has-header">
+
+                <ion-item ng-repeat="class in classes.slice().reverse()" ng-click="resetload()" ui-sref="tab.chat-orderdetail({id: orderId, type:orderType, class:class.key, chatId: chatId})">
+                <label style="text-align: left; float:left" class="addtoppadding">{{class.value.bookingtime | date:"EEE, MMM d, y h:mm a"}}</label>
+                <button style="text-align:right; float:right" class="button button-outline button-balanced" ng-show="class.value.confirmed&&!classExpired">
+                    <label> Confirm
+                    </label>
+                  </button>
+                  <button style="text-align:right; float:right" class="button button-outline button-assertive" ng-show="!class.value.confirmed&&!classExpired">
+                    <label> Pending
+                    </label>
+                  </button>
+                  <button style="text-align:right; float:right" class="button button-outline button-assertive" ng-show="classExpired">
+                    <label> Expired
+                    </label>
+                  </button>
+                </ion-item>
+                </ion-list>
+                <div style="font-size:13px;color:gray" ng-if="(!classes)&&(authData.uid!==order.providerid)">
+                  Ask Tutor To Add New Lesson Date.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(!classes)&&(authData.uid==order.providerid)">
+                  Set a Lesson Date for your Student.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="classes&&(authData.uid==order.providerid)&&!classes[0].class.value.confirmed&&!classExpired">
+                  Please wait for your Student to Accept the Offer.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="classes&&(authData.uid!==order.providerid)&&!classes[0].class.value.confirmed&&!classExpired">
+                  Please Click the Date Above to Accept the Offer.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(classExpired)&&(authData.uid!==order.providerid)">
+                  The Lesson has Expired wait for Tutor to add a New Lesson.
+                </div>
+                <div style="font-size:13px;color:gray" ng-if="(classExpired)&&(authData.uid==order.providerid)">
+                  The Lesson has Expired Please offer a new Lesson.
+                </div>
+          </div>
+        </div>
+
+          <button class="tabs button button-block button-stable" ng-click="showAlert('Leave Testimonials','After Offer Is Accepted')" ng-hide="order.accepted">
+              Leave Testimonial
+            </button>
+            <button class="tabs button button-block button-positive" ng-show="order.accepted&&allowReview" ng-click="openModal(1)">
+              Leave Testimonial
+            </button>
+    </ion-list>
+  </ion-content>
+</ion-view>

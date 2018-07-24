@@ -1,0 +1,17 @@
+<ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-calm">
+        <h1 class="title">Choose Tutor</h1>
+        <button class="button button-clear" ng-click="closeModal(5);">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+        <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-button-right item-icon-right" style="border-width:5px 5px 0px 5px;border-color:#f2f2f2;border-style:solid;" ng-repeat="reply in replies" ng-click="confirmCloseRequest(requestToClose,reply.key)">
+        <img ng-src="{{reply.face}}" err-src="img/assets/placeholder.png"/>
+        <h2>{{reply.name}}</h2>
+      </ion-item>
+      <ion-item class="item-remove-animate item-avatar item-button-right item-icon-right" style="border-width:5px 5px 5px 5px;border-color:#f2f2f2;border-style:solid;" ng-click="confirmCloseRequest(requestToClose, null)">
+      <h2>None of these Tutors were picked.</h2>
+      </ion-item>
+    </ion-list>
+    </ion-content>
+</ion-modal-view>
